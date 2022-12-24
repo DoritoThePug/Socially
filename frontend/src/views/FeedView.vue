@@ -1,13 +1,23 @@
 <template>
-  <PostComponent />
+  <div class="w-full">
+    <div class="flex flex-col space-y-[32px]">
+      <CreatePostComponent class="mb-[16px]"/>
+
+      <PostComponent />
+      <PostComponent />
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 
-import Post from '@/components/Post'
-import CreatePost from '@/components/CreatePost'
+// import Post from '@/components/Post'
+// import CreatePost from '@/components/CreatePost'
+import CreatePostComponent from '@/components/CreatePostComponent';
 import PostComponent from '@/components/PostComponent';
+
+
 
 export default {
   name: "FeedView",
@@ -17,9 +27,10 @@ export default {
     }
   },
   components: {
-    Post,
-    CreatePost,
+    // Post,
+    // CreatePost,
     PostComponent,
+    CreatePostComponent,
   },
   mounted() {
     this.get_user_posts()

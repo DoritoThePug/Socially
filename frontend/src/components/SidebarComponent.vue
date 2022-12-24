@@ -35,9 +35,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-import {toast} from 'bulma-toast'
-
 import AuthenticationOverlay from '@/components/AuthenticationOverlay';
 
 export default {
@@ -49,7 +46,6 @@ export default {
     }
   },
   methods: {
-  // .
   },
   components: {
     AuthenticationOverlay,

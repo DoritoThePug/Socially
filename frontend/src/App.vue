@@ -4,15 +4,15 @@
       <NavBar />
     </div>
     <div class="flex">
-      <div class="w-1/5 p-[32px]">
+      <div class="w-1/5 p-[32px] overflow-hidden">
         <div class="justify-between">
           <Sidebar/>
         </div>
       </div>
-      <div class="w-3/5 p-[32px]">
-        <PostComponent />
+      <div class="w-3/5 h-screen p-[32px] overflow-auto">
+        <router-view />
       </div>
-      <div class="w-1/5 p-[32px] space-y-[32px]">
+      <div class="w-1/5 p-[32px] space-y-[32px] overflow-hidden">
         <NotificationComponent />
         <FriendsComponent />
       </div>
@@ -25,7 +25,7 @@
 
   import Sidebar from '@/components/SidebarComponent'
   import AuthenticationOverlay from '@/components/AuthenticationOverlay'
-  import PostComponent from '@/components/PostComponent';
+  import CreatePostComponent from '@/components/CreatePostComponent';
   import NavBar from '@/components/NavBarComponent';
   import NotificationComponent from '@/components/NotificationComponent';
   import FriendsComponent from '@/components/FriendsComponent';
@@ -34,7 +34,7 @@
     name: "App",
     components: {
       NotificationComponent,
-      PostComponent,
+      CreatePostComponent,
       HomeView,
       Sidebar,
       AuthenticationOverlay,
@@ -100,7 +100,7 @@
   }
 
   h5 {
-    font-family: Proxima Nova, sans-serif;
+    font-family: Brandon Grotesque, sans-serif;
     @apply font-bold text-[18px] leading-[26px] text-black-100;
   }
 
