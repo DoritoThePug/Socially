@@ -1,22 +1,22 @@
 <template>
   <div class="w-full">
-    <div class="flex bg-white rounded-[25px] dropShadow overflow-x-hidden px-[16px] py-[18px] w-auto ">
-      <div class="w-[15%]">
-        <div class="h-[42px] w-[42px] pr-[8px] bg-gray-600 rounded-full inline-block"></div>
+    <div class="flex flex-col bg-white rounded-[25px] dropShadow px-[16px] py-[18px]">
+      <div class="flex flex-row space-x-[8px] mb-[12px]">
+        <div class="h-[42px] aspect-square pr-[8px] bg-gray-600 rounded-full"></div>
+        <div>
+          <p class="font-bold">Burrito Baby </p>
+          <p>wants to becomes friends with you!</p>
+        </div>
       </div>
 
-      <div class="flex flex-col w-[85%] pl-[8px] w-auto justify-between">
-        <p class="font-bold">Burrito Baby </p><p>wants to becomes friends with you!</p>
+      <div class="flex flex-row justify-center space-x-[16px]">
+        <button class="bg-primary-100 rounded-[5px] py-[4px] px-[20px]">
+          <h5 class="text-white">Accept</h5>
+        </button>
 
-        <div class="space-x-[16px] pt-[8px]">
-          <button class="w-auto bg-primary-100 rounded-[5px] inline-block py-[4px] px-[25px]">
-            <h5 class="text-white w-auto">Accept</h5>
-          </button>
-
-          <button class="bg-black-50 rounded-[5px] inline-block py-[4px] px-[25px]">
-            <h5 class="text-white w-auto">Ignore</h5>
-          </button>
-        </div>
+        <button class="bg-black-50 rounded-[5px] py-[4px] px-[20px]">
+          <h5 class="text-white">Ignore</h5>
+        </button>
       </div>
     </div>
   </div>
