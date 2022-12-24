@@ -1,18 +1,18 @@
 <template>
   <div class="w-full h-full mx-auto">
-    <div class="rounded-[15px] dropShadow px-[32px] py-[20px]">
+    <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0">
       <NavBar />
     </div>
     <div class="flex">
-      <div class="w-1/5 p-[32px] overflow-hidden">
-        <div class="justify-between">
+      <div class="w-1/5">
+        <div class="justify-between p-[32px] h-min sticky top-[74px]">
           <Sidebar/>
         </div>
       </div>
-      <div class="w-3/5 h-screen p-[32px] overflow-auto">
+      <div class="w-3/5 p-[32px]">
         <router-view />
       </div>
-      <div class="w-1/5 p-[32px] space-y-[32px] overflow-hidden">
+      <div class="w-1/5 p-[32px] space-y-[32px] h-min sticky top-[74px]">
         <NotificationComponent />
         <FriendsComponent />
       </div>
@@ -66,7 +66,6 @@
 .dropShadow {
   box-shadow: 0px 26px 80px rgba(26, 34, 35, 0.07), 0px 10.8622px 33.4221px rgba(26, 34, 35, 0.0503198), 0px 5.80744px 17.869px rgba(26, 34, 35, 0.0417275), 0px 3.2556px 10.0172px rgba(26, 34, 35, 0.035), 0px 1.72903px 5.32008px rgba(26, 34, 35, 0.0282725), 0px 0.719487px 2.21381px rgba(26, 34, 35, 0.0196802);
 }
-
 
 @layer base{
   p {

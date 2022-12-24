@@ -5,6 +5,9 @@
 
       <PostComponent />
       <PostComponent />
+      <PostComponent />
+      <PostComponent />
+      <PostComponent />
     </div>
   </div>
 </template>
