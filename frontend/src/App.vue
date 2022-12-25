@@ -1,5 +1,9 @@
 <template>
   <div class="w-full h-full mx-auto">
+<!--    <AuthenticationOverlay v-if="authenticationPromptVisible" class="absolute z-20 overflow-hidden fixed"/>-->
+<!--    <div class="w-full h-full fixed z-20 backdrop-blur-sm"></div>-->
+    <AuthenticationOverlay v-if="authenticationPromptVisible" class="fixed z-20"/>
+
     <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0">
       <NavBar />
     </div>
@@ -17,6 +21,9 @@
         <FriendsComponent />
       </div>
     </div>
+
+
+
   </div>
 </template>
 
@@ -42,13 +49,13 @@
       FriendsComponent,
     },
     methods: {
-      toggleLogInPrompt() {
-        this.logInPromptVisible = !this.logInPromptVisible
+      toggleAuthenticationPrompt() {
+        this.authenticationPromptVisible = !this.authenticationPromptVisible
       }
     },
     data() {
       return {
-        logInPromptVisible: false,
+        authenticationPromptVisible: true,
       }
     },
     beforeCreate() {

@@ -1,70 +1,53 @@
 <template>
-  <div class="grid">
-    <div class="grid absolute py-[32px] px-[64px] w-[704px] bg-white place-self-center z-10 rounded-[10px]">
-      <button @click="$parent.toggleLogInPrompt()" class="place-self-start ml-[-48px] mt-[-16px]"><i class="fa-solid fa-x"></i></button>
+  <div class="w-full h-full backdrop-blur-md flex place-content-center">
+    <div class="flex flex-col p-[32px] bg-white rounded-[25px] self-center">
+      <div class="flex flex-row justify-between items-center">
+        <h2 class="self-center align-middle">Log In</h2>
+        <button class="ml-auto flex-none hover:text-secondary-100" @click="$parent.toggleAuthenticationPrompt">
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </div>
 
-      <form v-if="showLogInPrompt" @submit.prevent="submitLogInForm" class="grid">
-        <h1 class="text-black-100 border-box justify-self-center">Log In</h1>
-        <hr class="bg-black-50 box-border mt-[8px] mb-[16px] mx-[128px]">
+      <h6 class="font-normal text-black-75 mr-[8px]">Email</h6>
+      <div class="min-w-[280px] rounded-[10px] p-[8px] border-[1px] border-black-25 mb-[16px]">
+        <input class="w-full bg-white focus:outline-none font-['roboto'] text-[14px]" type="email">
+      </div>
 
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Email</h6>
-          <input type="text" class="focus:outline-0 w-full bg-inherit" v-model="email">
+      <h6 class="font-normal text-black-75 mr-[8px]">Password</h6>
+      <div class="min-w-[280px] rounded-[10px] p-[8px] border-[1px] border-black-25 mb-[8px]">
+        <input class="w-full bg-white focus:outline-none" type="password">
+      </div>
+
+      <div class="flex flex-row items-center justify-between mb-[16px]">
+        <input class="mr-[4px] w-[12px] h-[12px] appearance-none border-[1px] border-black-25 rounded-[2px] checked:bg-secondary-100 hover:border-black-50" type="checkbox">
+        <p class="text-[12px] text-black-50">Remember me</p>
+
+        <router-link to="" class="ml-auto text-[12px] text-secondary-100 hover:text-secondary-80">Forgot Password?</router-link>
+      </div>
+
+      <button class="px-[38px] py-[8px] self-center rounded-[5px] bg-primary-100 hover:bg-primary-80 mb-[16px]">
+        <h4 class="text-white">Log In</h4>
+      </button>
+
+      <div class="h-[2px] bg-black-10 mb-[16px]"></div>
+
+      <div class="flex flex-row justify-center space-x-[32px] mb-[16px]">
+        <div class="authenticationIcon">
+          <i class="fa-brands fa-google text-[24px]"></i>
         </div>
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Password</h6>
-          <input type="password" class="focus:outline-0 w-full bg-inherit" v-model="password">
+        <div class="authenticationIcon">
+          <i class="fa-brands fa-github text-[24px]"></i>
         </div>
-
-        <a href="/password-reset/"><p class="text-primary-100 hover:underline active:text-primary-80">Forgot password?</p></a>
-
-        <button class="bg-gradient-to-r from-primary-100 to-secondary-100 px-[64px] py-[16px] rounded-full mt-[16px] text-center place-self-center mb-[16px] hover:from-primary-80 hover:to-secondary-80 active:from-primary-100 active:to-primary-100"><h4 class="text-white">Log In</h4></button>
-
-        <p @click="showLogInPrompt = false" class="text-primary-100 hover:underline active:text-primary-80">Don't have an account? Sign up instead.</p>
-      </form>
-
-      <form v-else @submit.prevent="submitSignUpForm" class="grid">
-        <h1 class="text-black-100 border-box justify-self-center">Sign Up</h1>
-        <hr class="bg-black-50 box-border mt-[8px] mb-[16px] mx-[128px]">
-
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Email</h6>
-          <input type="email" class="focus:outline-0 w-full bg-inherit" v-model="email">
+        <div class="authenticationIcon">
+          <i class="fa-brands fa-apple text-[24px]"></i>
         </div>
+      </div>
 
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Username</h6>
-          <input type="text" class="focus:outline-0 w-full bg-inherit" v-model="username">
-        </div>
-
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Password</h6>
-          <input type="password" class="focus:outline-0 w-full bg-inherit" v-model="password">
-        </div>
-
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Repeat password</h6>
-          <input type="password" class="focus:outline-0 w-full bg-inherit" v-model="password2">
-        </div>
-
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Bio</h6>
-          <input type="text" class="focus:outline-0 w-full bg-inherit" v-model="bio">
-        </div>
-
-        <div class="h-[64px] bg-[#EFEFEF] rounded-[10px] px-[16px] mb-[8px]">
-          <h6 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">Profile Picture</h6>
-          <input type="file" ref="file" class="focus:outline-0 w-full bg-inherit" @change="handleFileUpload()">
-        </div>
-
-
-        <button class="bg-gradient-to-r from-primary-100 to-secondary-100 px-[64px] py-[16px] rounded-full mt-[16px] text-center place-self-center mb-[16px] hover:from-primary-80 hover:to-secondary-80 active:from-primary-100 active:to-primary-100"><h4 class="text-white">Sign Up</h4></button>
-
-        <p @click="showLogInPrompt = true" class="text-primary-100 hover:underline active:text-primary-80">Already have an account? Log in instead.</p>
-      </form>
+      <div class="self-center">
+        <p class="inline">Don't have an account? </p>
+        <router-link class="text-secondary-100 hover:text-secondary-80 inline" to="">Sign up</router-link>
+      </div>
     </div>
-
-    <div class="h-screen w-screen bg-black-25 opacity-25"></div>
   </div>
 </template>
 
@@ -154,5 +137,7 @@ export default {
 </script>
 
 <style scoped>
-
+.authenticationIcon {
+  @apply flex place-items-center px-[10px] py-[6px] rounded-[5px] border-[1px] border-black-25;
+}
 </style>

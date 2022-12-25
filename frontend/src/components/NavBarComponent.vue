@@ -1,3 +1,11 @@
+<script setup>
+  import { storeToRefs } from 'pinia'
+
+  import { useUserStore } from '@/stores/UserStore'
+
+  const { isAuthenticated } = storeToRefs(useUserStore())
+</script>
+
 <template>
   <nav class="w-full">
     <div class="flex flex-row justify-between items-center">
@@ -9,12 +17,17 @@
       <button class="mr-[32px] text-[20px]">
         <i class="fa-solid fa-sun"></i>
       </button>
-      <div class="w-[32px] h-[32px] bg-black-50 rounded-full"></div>
+      <div  v-if="isAuthenticated" class="w-[32px] h-[32px] bg-black-50 rounded-full"></div>
+      <button v-else class="hover:text-secondary-100" @click="$parent.toggleAuthenticationPrompt">
+        <i class="fa-solid fa-right-to-bracket text-[24px]"></i>
+      </button>
     </div>
   </nav>
 </template>
 
 <script>
+
+
 export default {
   name: "NavBar"
 };
