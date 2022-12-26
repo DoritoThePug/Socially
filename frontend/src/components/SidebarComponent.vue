@@ -34,23 +34,13 @@
     </nav>
   </div>
 </template>
-<script>
-import AuthenticationOverlay from '@/components/AuthenticationOverlay';
 
-export default {
+<script lang="ts">
+import {defineComponent} from "vue";
+
+export default defineComponent({
   name: "SidebarComponent",
-  data() {
-    return {
-      showAccountPrompt: false,
-      abc: true,
-    }
-  },
-  methods: {
-  },
-  components: {
-    AuthenticationOverlay,
-  }
-};
+});
 </script>
 
 <style scoped>

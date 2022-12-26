@@ -12,12 +12,15 @@
   </div>
 </template>
 
-<script>
-import NotificationPopupComponent from '@/components/NotificationPopupComponent';
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+import NotificationPopupComponent from './NotificationPopupComponent.vue';
+
+export default defineComponent({
   name: "NotificationComponent",
   components: {NotificationPopupComponent}
-};
+});
 </script>
 
 <style scoped>

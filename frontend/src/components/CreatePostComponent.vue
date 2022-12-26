@@ -31,21 +31,12 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "PostComponent",
-  data(){
-    return {
-      postInput: '',
-    }
-  },
-  watch: {
-      postInput(value) {
-        this.$refs.postInputTextArea.style.height = 'auto'
-        this.$refs.postInputTextArea.style.height = this.$refs.postInputTextArea.scrollHeight + 'px'
-      }
-  }
-};
+});
 </script>
 
 <style scoped>

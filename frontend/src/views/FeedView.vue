@@ -10,42 +10,21 @@
   </div>
 </template>
 
-<script>
-import axios from 'axios'
+<script lang="ts">
+import { defineComponent } from "vue";
 
-// import Post from '@/components/Post'
-// import CreatePost from '@/components/CreatePost'
-import CreatePostComponent from '@/components/CreatePostComponent';
-import PostComponent from '@/components/PostComponent';
+import CreatePostComponent from '../components/CreatePostComponent.vue';
+import PostComponent from '../components/PostComponent.vue';
 
 
 
-export default {
+export default defineComponent({
   name: "FeedView",
-  data() {
-    return {
-      posts: []
-    }
-  },
   components: {
-    // Post,
-    // CreatePost,
     PostComponent,
     CreatePostComponent,
   },
-  mounted() {
-    this.get_user_posts()
-  },
-  methods: {
-    get_user_posts() {
-      axios
-          .get('/api/latest-posts/')
-          .then(response => {
-            this.posts = response.data
-          })
-    }
-  },
-};
+});
 </script>
 
 <style scoped>

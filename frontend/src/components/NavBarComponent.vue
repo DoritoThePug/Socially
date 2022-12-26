@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import { storeToRefs } from 'pinia'
 
   import { useUserStore } from '@/stores/UserStore'
@@ -25,12 +25,12 @@
   </nav>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-
-export default {
-  name: "NavBar"
-};
+export default defineComponent({
+  name: "NavBarComponent"
+});
 </script>
 
 <style scoped>

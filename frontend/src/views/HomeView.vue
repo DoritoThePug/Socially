@@ -1,21 +1,14 @@
 <template>
-  <div class="page-home">
-    <h1>Home Page</h1>
+  <div class="home">
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
 </template>
 
-<script>
-  import Sidebar from '@/components/SidebarComponent';
-  import FeedView from '@/views/FeedView';
-  import AuthenticationOverlay from '@/components/AuthenticationOverlay';
+<script lang="ts">
+import { defineComponent } from 'vue';
 
-  export default {
-    name: "App",
-    components: {
-      AuthenticationOverlay,
-      Sidebar,
-      FeedView
-    },
-
-  }
+export default defineComponent({
+  name: 'HomeView',
+});
 </script>

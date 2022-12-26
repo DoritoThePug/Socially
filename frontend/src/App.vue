@@ -1,16 +1,15 @@
 <template>
   <div class="w-full h-full mx-auto">
-<!--    <AuthenticationOverlay v-if="authenticationPromptVisible" class="absolute z-20 overflow-hidden fixed"/>-->
-<!--    <div class="w-full h-full fixed z-20 backdrop-blur-sm"></div>-->
-    <AuthenticationOverlay v-if="authenticationPromptVisible" class="fixed z-20"/>
+    <AuthenticationComponent v-if="authenticationPromptVisible" class="fixed z-20"/>
+    <SignUpComponent v-if="signUpPromptVisible" class="fixed z-20"/>
 
     <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0">
-      <NavBar />
+      <NavBarComponent />
     </div>
     <div class="flex">
       <div class="w-1/5">
         <div class="justify-between p-[32px] h-min sticky top-[74px]">
-          <Sidebar/>
+          <SidebarComponent />
         </div>
       </div>
       <div class="w-3/5 p-[32px]">
@@ -27,41 +26,52 @@
   </div>
 </template>
 
-<script>
-  import HomeView from '@/views/HomeView'
+<script lang="ts">
+  import { defineComponent } from "vue";
 
-  import Sidebar from '@/components/SidebarComponent'
-  import AuthenticationOverlay from '@/components/AuthenticationOverlay'
-  import CreatePostComponent from '@/components/CreatePostComponent';
-  import NavBar from '@/components/NavBarComponent';
-  import NotificationComponent from '@/components/NotificationComponent';
-  import FriendsComponent from '@/components/FriendsComponent';
+  import NavBarComponent from './components/NavBarComponent.vue';
+  import NotificationComponent from './components/NotificationComponent.vue';
+  import FriendsComponent from './components/FriendsComponent.vue';
+  import SidebarComponent from './components/SidebarComponent.vue';
 
-  export default {
+  import AuthenticationComponent from './components/AuthenticationComponent.vue'
+  import SignUpComponent from './components/SignUpComponent.vue';
+
+
+
+  export default defineComponent({
     name: "App",
     components: {
+      SidebarComponent,
+      NavBarComponent,
       NotificationComponent,
-      CreatePostComponent,
-      HomeView,
-      Sidebar,
-      AuthenticationOverlay,
-      NavBar,
       FriendsComponent,
-    },
-    methods: {
-      toggleAuthenticationPrompt() {
-        this.authenticationPromptVisible = !this.authenticationPromptVisible
-      }
+
+      AuthenticationComponent,
+      SignUpComponent
     },
     data() {
       return {
-        authenticationPromptVisible: true,
+        authenticationPromptVisible: false,
+        signUpPromptVisible: false
       }
     },
-    beforeCreate() {
-      this.$store.commit('initialize')
-    }
-  }
+    methods: {
+      toggleAuthenticationPrompt(): void {
+        // function called by AuthenticationComponent to toggle its visibility
+
+        this.signUpPromptVisible = false
+        this.authenticationPromptVisible = !this.authenticationPromptVisible
+      },
+
+      toggleSignUpPrompt() {
+        // function called by SignUpComponent to toggle its visibility
+
+        this.authenticationPromptVisible = false
+        this.signUpPromptVisible = !this.signUpPromptVisible
+      }
+    },
+  })
 </script>
 
 <style lang="scss">
