@@ -8,26 +8,34 @@
         </button>
       </div>
 
-      <h6 class="font-normal text-black-75 mr-[8px]">Email</h6>
-      <div class="min-w-[280px] rounded-[10px] p-[8px] border-[1px] border-black-25 mb-[16px]">
-        <input class="w-full bg-white focus:outline-none font-['roboto'] text-[14px]" type="email">
-      </div>
+      <form @submit.prevent="submitAuthenticationForm">
+        <h6 class="font-normal text-black-75 mr-[8px]">Email</h6>
+        <div class="min-w-[280px] rounded-[10px] p-[8px] border-[1px] border-black-25 mb-[16px]" :class="{ 'border-black-25': !emailError, 'border-error': emailError }">
+          <input class="w-full bg-white focus:outline-none font-['roboto'] text-[14px]" type="email" v-model="email">
+        </div>
+         <p v-if="emailError" class="text-[9px] text-error mt-[-8px] mb-[8px]">{{ this.emailError }}</p>
 
-      <h6 class="font-normal text-black-75 mr-[8px]">Password</h6>
-      <div class="min-w-[280px] rounded-[10px] p-[8px] border-[1px] border-black-25 mb-[8px]">
-        <input class="w-full bg-white focus:outline-none" type="password">
-      </div>
+        <h6 class="font-normal text-black-75 mr-[8px]">Password</h6>
+        <div class="min-w-[280px] rounded-[10px] p-[8px] border-[1px] mb-[8px]" :class="{ 'border-black-25': !passwordError, 'border-error': passwordError }">
+          <input class="w-full bg-white focus:outline-none" type="password" v-model="password">
+        </div>
+        <p v-if="passwordError" class="text-[9px] text-error mt-[-8px] mb-[8px]">{{ this.passwordError }}</p>
 
-      <div class="flex flex-row items-center justify-between mb-[16px]">
-        <input class="mr-[4px] w-[12px] h-[12px] appearance-none border-[1px] border-black-25 rounded-[2px] checked:bg-secondary-100 hover:border-black-50" type="checkbox">
-        <p class="text-[12px] text-black-50">Remember me</p>
+        <div class="flex flex-row items-center justify-between mb-[16px]">
+          <input
+              class="mr-[4px] w-[12px] h-[12px] appearance-none border-[1px] border-black-25 rounded-[2px] checked:bg-secondary-100 hover:border-black-50"
+              type="checkbox"
+              v-model="rememberMe">
+          <p class="text-[12px] text-black-50">Remember me</p>
 
-        <router-link to="" class="ml-auto text-[12px] text-secondary-100 hover:text-secondary-80">Forgot Password?</router-link>
-      </div>
+          <router-link to="" class="ml-auto text-[12px] text-secondary-100 hover:text-secondary-80">Forgot Password?
+          </router-link>
+        </div>
 
-      <button class="px-[38px] py-[8px] self-center rounded-[5px] bg-primary-100 hover:bg-primary-80 mb-[16px]">
-        <h4 class="text-white">Log In</h4>
-      </button>
+        <button type="submit" class="px-[38px] py-[8px] self-center rounded-[5px] bg-primary-100 hover:bg-primary-80 mb-[16px]" formnovalidate="formnovalidate">
+          <h4 class="text-white">Log In</h4>
+        </button>
+      </form>
 
       <div class="h-[2px] bg-black-10 mb-[16px]"></div>
 
@@ -43,7 +51,7 @@
         </div>
       </div>
 
-      <button class="self-center" @click="$parent.toggleSignUpPrompt">
+      <button class="self-center" @click="$parent.toggleSignUpPrompt" >
         <p class="inline">Don't have an account? </p>
         <p class="text-secondary-100 hover:text-secondary-80 inline">Sign up</p>
       </button>
@@ -54,8 +62,70 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import axios from 'axios'
+
 export default defineComponent({
   name: "AuthenticationComponent",
+  data() {
+    return {
+      email: "",
+      password: "",
+      rememberMe: false,
+
+      emailError: "", // error message for email input
+      passwordError: "", // error message for password input
+    }
+  },
+  methods: {
+    validateAuthenticationForm(): boolean { // makes sure inputs are valid for authentication form
+      if (this.email === "") {
+        this.emailError = "Email is required"
+      } else if (this.email.length > 255 || !this.email.includes("@") || !this.email.includes(".")) {
+        this.emailError = "Please enter a valid email"
+      } else {
+        this.emailError = ""
+      }
+
+      if (this.password === "") {
+        this.passwordError = "Password is required"
+      } else {
+        this.passwordError = ""
+      }
+
+      return !(this.emailError || this.passwordError);
+    },
+
+    submitAuthenticationForm(): void {
+      // fetch("http://127.0.0.1:8000/api/log-in/", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   credentials: "include",
+      //   body: JSON.stringify({
+      //     email: this.email,
+      //     password: this.password,
+      //   }),
+      // })
+
+      if (this.validateAuthenticationForm()) {
+        console.log(this.email, this.password)
+
+        axios.post('/api/log-in/', {
+          email: this.email,
+          password: this.password,
+        }, {withCredentials: true}).then(response => {
+          console.log(response.headers['set-cookie'])
+
+          axios.get('/api/hammy/', {withCredentials: true}).then(response => {
+            console.log(response)
+          })
+        }).catch(error => {
+          console.log(error)
+        })
+      }
+    }
+  }
 });
 </script>
 
