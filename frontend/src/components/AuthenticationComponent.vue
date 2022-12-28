@@ -1,3 +1,7 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
   <div class="w-full h-full backdrop-blur-md flex place-content-center">
     <div class="flex flex-col p-[32px] bg-white rounded-[25px] self-center">
@@ -61,11 +65,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useUserStore } from "@/stores/UserStore"
+import User from '@/interfaces/user'
+import { mapStores } from "pinia";
 
 import axios from 'axios'
 
+
+
 export default defineComponent({
   name: "AuthenticationComponent",
+  props: [ "toggleAuthenticationPrompt" ],
   data() {
     return {
       email: "",
@@ -76,6 +86,9 @@ export default defineComponent({
       passwordError: "", // error message for password input
     }
   },
+  // computed: {
+  //   ...mapStores(useUserStore)
+  // },
   methods: {
     validateAuthenticationForm(): boolean { // makes sure inputs are valid for authentication form
       if (this.email === "") {
@@ -95,39 +108,24 @@ export default defineComponent({
       return !(this.emailError || this.passwordError);
     },
 
-    submitAuthenticationForm(): void {
-      // fetch("http://127.0.0.1:8000/api/log-in/", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   credentials: "include",
-      //   body: JSON.stringify({
-      //     email: this.email,
-      //     password: this.password,
-      //   }),
-      // })
-
+    submitAuthenticationForm(): void { // submits authentication form
       if (this.validateAuthenticationForm()) {
-        console.log(this.email, this.password)
-
         axios.post('/api/log-in/', {
           email: this.email,
           password: this.password,
         }, {withCredentials: true}).then(response => {
-          console.log(response)
+          useUserStore().authenticate(response.data.token, response.data.user)
+          this.toggleAuthenticationPrompt()
 
-          axios.get('/api/hammy/', {withCredentials: true}).then(response => {
-            console.log(response)
-          })
+          // this.userStore.getIsAuthenticated()
+          // (this.$parent as any).toggleAuthenticationPrompt()
+          //
+          // console.log(useUserStore().getIsAuthenticated)
+
         }).catch(error => {
           console.log(error)
         })
       }
-
-      // axios.get('/api/hammy').then(response => {
-      //   console.log(response)
-      // })
     }
   }
 });

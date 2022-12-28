@@ -10,10 +10,17 @@ import router from './router'
 
 
 
-axios.defaults.baseURL = "http://192.168.88.105:443"
+axios.defaults.baseURL = "http://192.168.88.105:8000"
 axios.defaults.withCredentials = true
 
 const pinia = createPinia()
+
+declare module 'pinia' {
+  export interface MapStoresCustomization {
+    // set it to the same value as above
+    suffix: ''
+  }
+}
 
 const app = createApp(App)
 

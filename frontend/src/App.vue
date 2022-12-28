@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full mx-auto">
-    <AuthenticationComponent v-if="authenticationPromptVisible" class="fixed z-20"/>
+    <AuthenticationComponent v-if="authenticationPromptVisible" class="fixed z-20" :toggleAuthenticationPrompt="toggleAuthenticationPrompt"/>
     <SignUpComponent v-if="signUpPromptVisible" class="fixed z-20"/>
 
     <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0">

@@ -1,7 +1,16 @@
 import { defineStore } from 'pinia'
 
-export const useUserStore = defineStore("UserStore", {
+import User from '../interfaces/user'
+
+export const useUserStore = defineStore("userStore", {
   state: () => ({
     isAuthenticated: false,
-  })
+    user: {} as User,
+  }),
+  actions: {
+    authenticate(token:string, user:User):void {
+      this.isAuthenticated = true
+      this.user = user
+    }
+  }
 })
