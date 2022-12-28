@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-^ljy7l9u&3_pkz-z+-$fx34epfk1xz_116-f1p29$k*0l&=6s7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.88.105']
 
 
 # Application definition
@@ -105,7 +105,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -124,11 +123,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'socially.authentication.CookieTokenAuthentication',
+#         # 'rest_framework.authentication.TokenAuthentication',
+#     ),
+#
+# }
 
 AUTH_USER_MODEL = 'user.CustomUser'
 

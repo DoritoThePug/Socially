@@ -10,7 +10,8 @@ import router from './router'
 
 
 
-axios.defaults.baseURL = "http://127.0.0.1:8000"
+axios.defaults.baseURL = "http://192.168.88.105:443"
+axios.defaults.withCredentials = true
 
 const pinia = createPinia()
 

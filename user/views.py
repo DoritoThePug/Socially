@@ -3,8 +3,10 @@ from django.template.defaultfilters import slugify
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
+from socially.authentication import CookieTokenAuthentication
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import CustomUser
 from .serializers import UserSerializer
@@ -44,13 +46,17 @@ class AuthenticateUser(APIView):
 
             serializer = UserSerializer(user)
 
-            return Response({'token': auth_token.key, 'user': serializer.data})
+            response = Response()
+            response.data = {'token': auth_token.key}
+            response.set_cookie(key='token', value=f"Token {auth_token.key}", httponly=True)
+
+            return response
         else:
             return Response("Error")
 
 
 class UserDetails(APIView):
-    permission_classes = (IsAuthenticated, )
+    # permission_classes = (IsAuthenticated, )
 
     def get(self, request, user_slug, format=None):
         try:
@@ -63,8 +69,17 @@ class UserDetails(APIView):
             return Response("User does not exist")
 
 
+class Test(APIView):
+    authentication_classes = (CookieTokenAuthentication, )
+    # permission_classes = (IsAuthenticated, )
+
+    def get(self, request, format=None):
+        print(request.COOKIES)
+        return Response()
+
+
 class FollowUser(APIView):
-    permission_classes = (IsAuthenticated, )
+    # permission_classes = (IsAuthenticated, )
 
     def patch(self, request, following_user_slug, format=None):
         auth_user = request.headers["Authorization"].split()[1]

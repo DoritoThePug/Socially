@@ -115,7 +115,7 @@ export default defineComponent({
           email: this.email,
           password: this.password,
         }, {withCredentials: true}).then(response => {
-          console.log(response.headers['set-cookie'])
+          console.log(response)
 
           axios.get('/api/hammy/', {withCredentials: true}).then(response => {
             console.log(response)
@@ -124,6 +124,10 @@ export default defineComponent({
           console.log(error)
         })
       }
+
+      // axios.get('/api/hammy').then(response => {
+      //   console.log(response)
+      // })
     }
   }
 });
