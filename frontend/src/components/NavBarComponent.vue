@@ -4,6 +4,7 @@
   import { useUserStore } from '@/stores/UserStore'
 
   const { isAuthenticated } = storeToRefs(useUserStore())
+  const { user } = storeToRefs(useUserStore())
 </script>
 
 <template>
@@ -17,7 +18,9 @@
       <button class="mr-[32px] text-[20px]">
         <i class="fa-solid fa-sun"></i>
       </button>
-      <div  v-if="isAuthenticated" class="w-[32px] h-[32px] bg-black-50 rounded-full"></div>
+      <button  v-if="isAuthenticated">
+        <img :src="user.get_profile_picture" alt="" class="w-[32px] h-[32px] rounded-full">
+      </button>
       <button v-else class="hover:text-secondary-100" @click="$parent.toggleAuthenticationPrompt">
         <i class="fa-solid fa-right-to-bracket text-[24px]"></i>
       </button>

@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import authenticate, login
 from django.template.defaultfilters import slugify
 from rest_framework.response import Response
@@ -47,8 +49,13 @@ class AuthenticateUser(APIView):
             serializer = UserSerializer(user)
 
             response = Response()
-            response.data = {'token': auth_token.key}
-            response.set_cookie(key='token', value=f"Token {auth_token.key}", httponly=True)
+            response.data = {'token': auth_token.key, 'user': serializer.data}
+            response.set_cookie(
+                key='token',
+                value=f"Token {auth_token.key}",
+                httponly=True,
+                max_age=datetime.timedelta(days=30)
+            )
 
             return response
         else:
@@ -67,15 +74,6 @@ class UserDetails(APIView):
             return Response(serializer.data)
         except CustomUser.DoesNotExist:
             return Response("User does not exist")
-
-
-class Test(APIView):
-    authentication_classes = (CookieTokenAuthentication, )
-    # permission_classes = (IsAuthenticated, )
-
-    def get(self, request, format=None):
-        print(request.COOKIES)
-        return Response()
 
 
 class FollowUser(APIView):

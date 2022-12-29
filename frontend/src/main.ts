@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 
 import axios from 'axios'
 import {createPinia} from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 
 import VueCookies from 'vue-cookies'
@@ -14,13 +15,7 @@ axios.defaults.baseURL = "http://192.168.88.105:8000"
 axios.defaults.withCredentials = true
 
 const pinia = createPinia()
-
-declare module 'pinia' {
-  export interface MapStoresCustomization {
-    // set it to the same value as above
-    suffix: ''
-  }
-}
+pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App)
 

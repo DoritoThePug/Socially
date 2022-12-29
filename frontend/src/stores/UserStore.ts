@@ -1,3 +1,4 @@
+import { watch } from 'vue'
 import { defineStore } from 'pinia'
 
 import User from '../interfaces/user'
@@ -12,5 +13,6 @@ export const useUserStore = defineStore("userStore", {
       this.isAuthenticated = true
       this.user = user
     }
-  }
+  },
+  persist: true
 })
