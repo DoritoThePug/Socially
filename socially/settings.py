@@ -54,6 +54,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
+    "http://192.168.88.105:8080"
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
@@ -128,7 +129,6 @@ AUTH_PASSWORD_VALIDATORS = [
 #         'socially.authentication.CookieTokenAuthentication',
 #         # 'rest_framework.authentication.TokenAuthentication',
 #     ),
-#
 # }
 
 AUTH_USER_MODEL = 'user.CustomUser'

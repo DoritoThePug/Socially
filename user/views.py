@@ -18,16 +18,19 @@ from .serializers import UserSerializer
 
 class CreateUser(APIView):
     def post(self, request, format=None):
-        user = CustomUser.objects.create_user(
-            email=request.data["email"],
-            password=request.data["password"],
-            username=request.data["username"],
-            profile_picture=request.data["profile_picture"],
-            bio=request.data["bio"],
-            slug=slugify(request.data["slug"])
-        )
+        try:
+            user = CustomUser.objects.create_user(
+                email=request.data["email"],
+                password=request.data["password"],
+                username=request.data["username"],
+                profile_picture=request.data["profile_picture"],
+                bio=request.data["bio"],
+                slug=slugify(request.data["slug"])
+            )
+        except KeyError:
+            return Response("KeyError", status=status.HTTP_400_BAD_REQUEST)
 
-        return Response("Creation successful")
+        return Response("Creation successful", status=status.HTTP_201_CREATED)
 
 
 class AuthenticateUser(APIView):
@@ -59,12 +62,10 @@ class AuthenticateUser(APIView):
 
             return response
         else:
-            return Response("Error")
+            return Response("Invalid credentials", status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserDetails(APIView):
-    # permission_classes = (IsAuthenticated, )
-
     def get(self, request, user_slug, format=None):
         try:
             user = CustomUser.objects.all().get(slug=user_slug)
@@ -73,11 +74,11 @@ class UserDetails(APIView):
 
             return Response(serializer.data)
         except CustomUser.DoesNotExist:
-            return Response("User does not exist")
+            return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
 
 
 class FollowUser(APIView):
-    # permission_classes = (IsAuthenticated, )
+    authentication_classes = (CookieTokenAuthentication, )
 
     def patch(self, request, following_user_slug, format=None):
         auth_user = request.headers["Authorization"].split()[1]

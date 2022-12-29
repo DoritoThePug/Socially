@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
+from socially.authentication import CookieTokenAuthentication
 from rest_framework import status
 
 from .models import Post
@@ -14,10 +14,10 @@ from .serializers import PostSerializer
 
 
 class CreatePost(APIView):
-    permission_classes = (IsAuthenticated, )
+    authentication_classes = (CookieTokenAuthentication, )
 
     def post(self, request, format=None):
-        auth_token = request.headers.get('Authorization').split(' ')[1]
+        auth_token = request.COOKIES.get('token').split(' ')[1]
 
         author = Token.objects.get(key=auth_token).user
 
@@ -66,14 +66,17 @@ class PostDetail(APIView):
 
 
 class LikePost(APIView):
-    permission_classes = (IsAuthenticated, )
+    authentication_classes = (CookieTokenAuthentication,)
 
     def patch(self, request, post_id, format=None):
-        auth_token = request.headers.get('Authorization').split(' ')[1]
+        auth_token = request.COOKIES.get('token').split(' ')[1]
 
         user = Token.objects.get(key=auth_token).user
 
         post = Post.objects.get(id=post_id)
+
+        if post is None:
+            return Response("Post does not exist", status=status.HTTP_404_NOT_FOUND)
 
         if user in post.likes.all():
             post.likes.remove(user)
@@ -85,25 +88,32 @@ class LikePost(APIView):
         post.save()
         user.save()
 
-        return Response("Success", status=status.HTTP_200_OK)
+        serializer = PostSerializer(post)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def get(self, request, post_id, format=None):
-        auth_token = request.headers.get('Authorization').split(' ')[1]
+        auth_token = request.COOKIES.get('token').split(' ')[1]
 
         post = Post.objects.get(id=post_id)
+
+        if post is None:
+            return Response("Post does not exist", status=status.HTTP_404_NOT_FOUND)
+
         user = Token.objects.get(key=auth_token).user
+        serializer = PostSerializer(post)
 
         if user in post.likes.all():
-            return Response("Post liked", status=status.HTTP_200_OK)
+            return Response({"isLiked": True, "post": serializer.data}, status=status.HTTP_200_OK)
         else:
-            return Response("Post not liked", status=status.HTTP_200_OK)
+            return Response({"isLiked": False, "post": serializer.data}, status=status.HTTP_200_OK)
 
 
 class DeletePost(APIView):
-    permission_classes = (IsAuthenticated, )
+    authentication_classes = (CookieTokenAuthentication,)
 
     def delete(self, request, post_id, format=None):
-        auth_token = request.headers.get("Authorization").split(' ')[1]
+        auth_token = request.COOKIES.get("token").split(' ')[1]
 
         user = Token.objects.get(key=auth_token).user
         post = Post.objects.get(id=post_id)
