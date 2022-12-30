@@ -31,15 +31,15 @@
           <p class="inline">{{ formatter.format(post.likes.length) }} likes</p>
         </button>
         <button class="flex items-center space-x-[8px]">
-          <i class="fa-solid fa-comment text-[24px]"></i>
+          <i class="fa-solid fa-comment text-[24px] text-black-75"></i>
           <p>7k comments</p>
         </button>
         <button class="flex items-center space-x-[8px]">
-          <i class="fa-solid fa-share text-[24px]"></i>
+          <i class="fa-solid fa-share text-[24px] text-black-75"></i>
           <p>1k shares</p>
         </button>
         <button class="flex items-center space-x-[8px]">
-          <i class="fa-solid fa-bookmark text-[24px]"></i>
+          <i class="fa-solid fa-bookmark text-[24px] text-black-75"></i>
           <p>500 bookmarks</p>
         </button>
       </div>

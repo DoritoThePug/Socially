@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import FeedView from '../views/FeedView.vue';
+import AccountView from "@/views/AccountView.vue";
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: FeedView
+  },
+  {
+    path: '/profile/:user_slug',
+    name: 'profile',
+    component: AccountView
   },
 ]
 

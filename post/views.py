@@ -38,18 +38,19 @@ class LatestPosts(APIView):
 
 
 class GetUserPosts(APIView):
-    def get(self, request, format=None):
+    def get(self, request, user_slug,format=None):
         users = get_user_model()
 
-        try:
-            user = users.objects.get(email=request.GET['email'])
-            posts = Post.objects.filter(author=user)
+        user = users.objects.get(slug=user_slug)
 
-            serializer = PostSerializer(posts, many=True)
+        if user is None:
+            return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except users.DoesNotExist:
-            return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
+        posts = Post.objects.filter(author=user)
+
+        serializer = PostSerializer(posts, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class PostDetail(APIView):

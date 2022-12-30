@@ -4,8 +4,8 @@ export default interface User {
     date_joined: string
     get_profile_picture: string
     bio: string
-    liked_posts: number[]
-    followers: number[]
-    following: number[]
+    liked_posts: number
+    followers: number
+    following: number
     slug: string
 }
