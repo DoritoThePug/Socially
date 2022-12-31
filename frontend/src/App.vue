@@ -3,19 +3,19 @@
     <AuthenticationComponent v-if="authenticationPromptVisible" class="fixed z-20" :toggleAuthenticationPrompt="toggleAuthenticationPrompt"/>
     <SignUpComponent v-if="signUpPromptVisible" class="fixed z-20"/>
 
-    <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0">
+    <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0 z-10">
       <NavBarComponent />
     </div>
     <div class="flex">
-      <div class="w-1/5">
-        <div class="justify-between p-[32px] h-min sticky top-[74px]">
+      <div class="w-[22%]">
+        <div class="justify-between p-[32px] pl-[64px] h-min sticky top-[74px]">
           <SidebarComponent />
         </div>
       </div>
-      <div class="w-3/5 p-[32px]">
+      <div class="w-[56%] p-[32px]">
         <router-view />
       </div>
-      <div class="w-1/5 p-[32px] space-y-[32px] h-min sticky top-[74px]">
+      <div class="w-[22%] p-[32px] pr-[64px] space-y-[32px] h-min sticky top-[74px]">
         <NotificationComponent />
         <FriendsComponent />
       </div>

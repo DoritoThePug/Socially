@@ -10,7 +10,7 @@
         <div class="p-[24px] pt-[128px] z-10">
           <div class="flex flex-row justify-between">
             <div>
-              <img :src="user.get_profile_picture"
+              <img :src="user.get_profile_picture" />
                    class="z-50 w-[112px] aspect-square rounded-full bg-black-50 mb-[8px]"/>
               <h5 class="leading-none">{{ user.username }}</h5>
               <div>
