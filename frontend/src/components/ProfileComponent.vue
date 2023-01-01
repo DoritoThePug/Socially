@@ -10,8 +10,7 @@
         <div class="p-[24px] pt-[128px] z-10">
           <div class="flex flex-row justify-between">
             <div>
-              <img :src="user.get_profile_picture" />
-                   class="z-50 w-[112px] aspect-square rounded-full bg-black-50 mb-[8px]"/>
+              <img :src="user.get_profile_picture" class="z-50 w-[112px] aspect-square rounded-full bg-black-50 mb-[8px]"/>
               <h5 class="leading-none">{{ user.username }}</h5>
               <div>
                 <p class="text-[10px] text-black-50 inline mr-[8px]"><b>{{ formatter.format(user.followers) }}</b>
@@ -19,9 +18,14 @@
                 <p class="text-[10px] text-black-50 inline"><b>{{ formatter.format(user.following) }}</b> Following</p>
               </div>
             </div>
-            <button class="bg-primary-100 text-white font-[500] px-[8px] rounded-[8px] self-center ml-auto mr-[16px]">
+
+            <button v-if="!isFollowing" @click="followUser" class="bg-primary-100 text-white font-[500] px-[8px] rounded-[8px] self-center ml-auto mr-[16px]">
               Follow
             </button>
+            <button v-else @click="followUser" class="bg-black-50 text-white font-[500] px-[8px] rounded-[8px] self-center ml-auto mr-[16px]">
+              Following
+            </button>
+
             <button>
               <i class="fa-solid fa-ellipsis-vertical"></i>
             </button>
@@ -48,18 +52,23 @@ export default defineComponent({
   components: {
     PostComponent
   },
+  props: {
+    toggleAuthenticationPrompt: Function,
+    toggleSignUpPrompt: Function
+  },
   data() {
     return {
       user: {} as User,
-      posts: [] as Post[]
+      posts: [] as Post[],
+      isFollowing: false
     }
   },
   methods: {
     async getUserInfo() {
       await axios.get(`/api/${this.$route.params.user_slug}/`)
         .then((response) => {
-          this.user = response.data
-          console.log(response.data)
+          this.user = response.data.user
+          this.isFollowing = response.data.is_following
         })
         .catch((error) => {
           console.log(error)
@@ -69,6 +78,16 @@ export default defineComponent({
       await axios.get(`/api/posts/${this.$route.params.user_slug}/`)
         .then((response) => {
           this.posts = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    async followUser() {
+      await axios.patch(`/api/${this.$route.params.user_slug}/follow/`)
+        .then((response) => {
+          this.user = response.data.user
+          this.isFollowing = response.data.is_following
         })
         .catch((error) => {
           console.log(error)

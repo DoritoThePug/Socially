@@ -67,39 +67,59 @@ class AuthenticateUser(APIView):
 
 class UserDetails(APIView):
     def get(self, request, user_slug, format=None):
-        try:
-            user = CustomUser.objects.all().get(slug=user_slug)
+        user = CustomUser.objects.all().get(slug=user_slug)
 
-            serializer = UserSerializer(user)
-
-            return Response(serializer.data)
-        except CustomUser.DoesNotExist:
+        if user is None:
             return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
+
+        auth_token = request.COOKIES.get('token').split(' ')[1]
+
+        serializer = UserSerializer(user)
+
+        if auth_token is not None:
+            following_user = Token.objects.get(key=auth_token).user
+
+            if following_user in user.followers.all():
+                return Response({"user": serializer.data, "is_following": True}, status=status.HTTP_200_OK)
+
+            return Response({"user": serializer.data, "is_following": False}, status=status.HTTP_200_OK)
+
+        return Response({"user": serializer.data, "is_following": False}, status=status.HTTP_200_OK)
+
+
+
+
 
 
 class FollowUser(APIView):
     authentication_classes = (CookieTokenAuthentication, )
 
     def patch(self, request, following_user_slug, format=None):
-        auth_user = request.headers["Authorization"].split()[1]
+        auth_user = request.COOKIES["token"].split()[1]
 
-        user = Token.objects.get(key=auth_user).user # User trying to follow
+        user = Token.objects.get(key=auth_user).user  # User trying to follow
 
-        try:
-            following_user = CustomUser.objects.get(slug=following_user_slug) # User being followed
-
-            if user in following_user.followers.all():
-                following_user.followers.remove(user)
-                user.following.remove(following_user)
-            else:
-                following_user.followers.add(user)
-                user.following.add(following_user)
-
-            user.save()
-            following_user.save()
-
-            serializer = UserSerializer(following_user)
-
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except CustomUser.DoesNotExist:
+        if user is None:
             return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
+
+        following_user = CustomUser.objects.get(slug=following_user_slug) # User being followed
+
+        is_following = False
+
+        if user in following_user.followers.all():
+            following_user.followers.remove(user)
+            user.following.remove(following_user)
+            is_following = False
+        else:
+            following_user.followers.add(user)
+            user.following.add(following_user)
+            is_following = True
+
+        user.save()
+        following_user.save()
+
+        serializer = UserSerializer(following_user)
+
+        return Response({"user": serializer.data, "is_following":is_following}, status=status.HTTP_200_OK)
+
+

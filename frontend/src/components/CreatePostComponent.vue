@@ -46,12 +46,12 @@ export default defineComponent({
     reloadFeed() {
       this.$emit('reloadFeed')
     },
-    submitPost() {
+    async submitPost() {
       if (!this.postContent) {
         return
       }
 
-      axios.post('/api/post/', {
+      await axios.post('/api/post/', {
         content: this.postContent
       }, {withCredentials: true}).then(response => {
         this.reloadFeed()

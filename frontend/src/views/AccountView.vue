@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex flex-col space-y-[32px]">
-      <ProfileComponent />
+      <ProfileComponent :toggleAuthenticationPrompt="toggleAuthenticationPrompt" :toggleSignUpPrompt="toggleSignUpPrompt"/>
     </div>
   </div>
 </template>
@@ -15,6 +15,10 @@ export default defineComponent({
   name: "AccountView",
   components: {
     ProfileComponent
+  },
+  props: {
+    toggleAuthenticationPrompt: Function,
+    toggleSignUpPrompt: Function
   }
 });
 </script>

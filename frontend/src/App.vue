@@ -3,7 +3,7 @@
     <AuthenticationComponent v-if="authenticationPromptVisible" class="fixed z-20" :toggleAuthenticationPrompt="toggleAuthenticationPrompt"/>
     <SignUpComponent v-if="signUpPromptVisible" class="fixed z-20"/>
 
-    <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0 z-10">
+    <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0 z-50">
       <NavBarComponent />
     </div>
     <div class="flex">
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="w-[56%] p-[32px]">
-        <router-view />
+        <router-view :toggleAuthenticationPrompt="toggleAuthenticationPrompt" :toggleSignUpPrompt="toggleSignUpPrompt"/>
       </div>
       <div class="w-[22%] p-[32px] pr-[64px] space-y-[32px] h-min sticky top-[74px]">
         <NotificationComponent />

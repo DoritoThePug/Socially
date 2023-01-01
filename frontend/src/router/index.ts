@@ -12,7 +12,8 @@ const routes = [
   {
     path: '/profile/:user_slug',
     name: 'profile',
-    component: AccountView
+    component: AccountView,
+    props: true
   },
 ]
 

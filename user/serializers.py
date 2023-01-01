@@ -30,5 +30,5 @@ class UserSerializer(serializers.ModelSerializer):
             "liked_posts",
             "followers",
             "following",
-            "slug"
+            "slug",
         )

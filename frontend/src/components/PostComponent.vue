@@ -63,16 +63,16 @@ export default defineComponent({
     }
   },
   methods: {
-    likePost() {
-      axios.patch(`/api/posts/${this.post.id}/like/`).then(response => {
+    async likePost() {
+      await axios.patch(`/api/posts/${this.post.id}/like/`).then(response => {
         this.isLiked = !this.isLiked
         this.localPost.likes = response.data.likes
       }).catch(error => {
         console.log(error)
       })
     },
-    isPostLiked() {
-      axios.get(`/api/posts/${this.post.id}/like/`).then(response => {
+    async isPostLiked() {
+      await axios.get(`/api/posts/${this.post.id}/like/`).then(response => {
         this.isLiked = response.data.isLiked
         this.localPost.likes = response.data.post.likes
         console.log(this.localPost)

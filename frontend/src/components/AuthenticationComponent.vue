@@ -108,9 +108,9 @@ export default defineComponent({
       return !(this.emailError || this.passwordError);
     },
 
-    submitAuthenticationForm(): void { // submits authentication form
+    async submitAuthenticationForm() { // submits authentication form
       if (this.validateAuthenticationForm()) {
-        axios.post('/api/log-in/', {
+        await axios.post('/api/log-in/', {
           email: this.email,
           password: this.password,
         }, {withCredentials: true}).then(response => {

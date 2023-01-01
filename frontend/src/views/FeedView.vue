@@ -30,8 +30,8 @@ export default defineComponent({
     }
   },
   methods: {
-    getLatestPosts() {
-      axios.get('/api/latest-posts/')
+    async getLatestPosts() {
+      await axios.get('/api/latest-posts/')
         .then((response) => {
           this.latestPosts = response.data;
         })

@@ -11,7 +11,7 @@
   <nav class="w-full">
 
     <div class="flex flex-row justify-between items-center">
-      <h4 class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text">SOCIALLY</h4>
+      <button @click="goToHome" class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text font-bold text-[22px] leading-[31px]">SOCIALLY</button>
       <div class="flex ml-auto w-[400px] bg-black-10 h-[32px] rounded-[10px] mr-[16px] py-[8px] px-[16px] content-center">
         <input class="bg-black-10 w-full overflow-hidden focus: outline-none font-['roboto'] text-[14px]" type="text" placeholder="Search"/>
         <i class="fa-solid fa-magnifying-glass text-primary-100 text-black-50"></i>
@@ -28,7 +28,7 @@
 
       <div v-if="showDropDown" class="relative">
         <div class="rounded-[25px] absolute bg-white dropShadow top-[32px] right-[8px] py-[24px] px-[32px] flex flex-col space-y-[16px]">
-          <button class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500]">
+          <button @click="goToProfile" class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500]">
             <i class="fa-solid fa-user fa-md mr-[32px]"></i>
             Profile
           </button>
@@ -48,6 +48,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mapState } from "pinia";
+
+import { useUserStore } from '@/stores/UserStore'
+
+
 
 export default defineComponent({
   name: "NavBarComponent",
@@ -56,9 +61,18 @@ export default defineComponent({
       showDropDown: false
     }
   },
+  computed: {
+    ...mapState(useUserStore, ['isAuthenticated', 'user'])
+  },
   methods: {
     toggleDropDown() {
       this.showDropDown = !this.showDropDown
+    },
+    goToProfile() {
+      this.$router.push(`/profile/${this.user.username}`)
+    },
+    goToHome() {
+      this.$router.push('/')
     }
   }
 });
