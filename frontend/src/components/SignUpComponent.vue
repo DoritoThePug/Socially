@@ -1,9 +1,15 @@
+<script setup lang="ts">
+  import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
+
+  const authenticationStore = useAuthenticationComponentStore();
+</script>
+
 <template>
 <div class="w-full h-full backdrop-blur-md flex place-content-center">
     <div class="flex flex-col p-[32px] bg-white rounded-[25px] self-center">
       <div class="flex flex-row justify-between items-center">
         <h2 class="self-center align-middle">Sign Up</h2>
-        <button class="ml-auto flex-none hover:text-secondary-100" @click="$parent.toggleSignUpPrompt">
+        <button class="ml-auto flex-none hover:text-secondary-100" @click="authenticationStore.toggleSignUpComponent()">
           <i class="fa-solid fa-x"></i>
         </button>
       </div>
@@ -54,7 +60,7 @@
         </div>
       </div>
 
-      <button class="self-center" @click="$parent.toggleAuthenticationPrompt">
+      <button class="self-center" @click="authenticationStore.toggleAuthenticationComponent()">
         <p class="inline">Already have an account? </p>
         <p class="text-secondary-100 hover:text-secondary-80 inline">Log In</p>
       </button>

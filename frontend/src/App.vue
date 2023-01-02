@@ -1,7 +1,19 @@
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+
+import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
+
+const authenticationStore = useAuthenticationComponentStore();
+
+const { isAuthenticationComponentOpen, isSignUpComponentOpen } = storeToRefs(
+  useAuthenticationComponentStore()
+);
+</script>
+
 <template>
   <div class="w-full h-full mx-auto">
-    <AuthenticationComponent v-if="authenticationPromptVisible" class="fixed z-20" :toggleAuthenticationPrompt="toggleAuthenticationPrompt"/>
-    <SignUpComponent v-if="signUpPromptVisible" class="fixed z-20"/>
+    <AuthenticationComponent v-if="isAuthenticationComponentOpen" class="fixed z-20"/>
+    <SignUpComponent v-if="isSignUpComponentOpen" class="fixed z-20"/>
 
     <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0 z-50">
       <NavBarComponent />
@@ -13,7 +25,7 @@
         </div>
       </div>
       <div class="w-[56%] p-[32px]">
-        <router-view :toggleAuthenticationPrompt="toggleAuthenticationPrompt" :toggleSignUpPrompt="toggleSignUpPrompt"/>
+        <router-view/>
       </div>
       <div class="w-[22%] p-[32px] pr-[64px] space-y-[32px] h-min sticky top-[74px]">
         <NotificationComponent />
@@ -33,7 +45,6 @@
   import NotificationComponent from './components/NotificationComponent.vue';
   import FriendsComponent from './components/FriendsComponent.vue';
   import SidebarComponent from './components/SidebarComponent.vue';
-
   import AuthenticationComponent from './components/AuthenticationComponent.vue'
   import SignUpComponent from './components/SignUpComponent.vue';
 
@@ -49,27 +60,6 @@
 
       AuthenticationComponent,
       SignUpComponent
-    },
-    data() {
-      return {
-        authenticationPromptVisible: false,
-        signUpPromptVisible: false
-      }
-    },
-    methods: {
-      toggleAuthenticationPrompt(): void {
-        // function called by AuthenticationComponent to toggle its visibility
-
-        this.signUpPromptVisible = false
-        this.authenticationPromptVisible = !this.authenticationPromptVisible
-      },
-
-      toggleSignUpPrompt() {
-        // function called by SignUpComponent to toggle its visibility
-
-        this.authenticationPromptVisible = false
-        this.signUpPromptVisible = !this.signUpPromptVisible
-      }
     },
   })
 </script>

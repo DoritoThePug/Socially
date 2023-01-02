@@ -50,7 +50,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from 'axios'
+import { mapState } from 'pinia'
 
+import { useUserStore } from "@/stores/UserStore";
 import Post from '@/interfaces/post'
 
 export default defineComponent({
@@ -61,6 +63,9 @@ export default defineComponent({
       isLiked: false,
       localPost: this.post as Post
     }
+  },
+  computed: {
+    ...mapState(useUserStore, ['isAuthenticated'])
   },
   methods: {
     async likePost() {
@@ -75,14 +80,15 @@ export default defineComponent({
       await axios.get(`/api/posts/${this.post.id}/like/`).then(response => {
         this.isLiked = response.data.isLiked
         this.localPost.likes = response.data.post.likes
-        console.log(this.localPost)
       }).catch(error => {
         console.log(error)
       })
     }
   },
   mounted() {
-    this.isPostLiked()
+    if (this.isAuthenticated) {
+      this.isPostLiked()
+    }
   }
 });
 </script>

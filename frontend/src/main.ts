@@ -8,9 +8,11 @@ import VueCookies from 'vue-cookies'
 import App from './App.vue'
 import router from './router'
 
+import {useAuthenticationComponentStore} from "@/stores/AuthenticationComponentStore";
 
 
-axios.defaults.baseURL = "http://192.168.88.105:8000"
+
+axios.defaults.baseURL = "http://192.168.88.109:8000"
 axios.defaults.withCredentials = true
 
 const pinia = createPinia()
@@ -24,3 +26,15 @@ app.use(router)
 
 app.use(pinia)
 app.mount('#app')
+
+axios.interceptors.response.use(function (config) {
+    return config;
+}, function (error) {
+  if (error.response.status == 401) {
+      useAuthenticationComponentStore().toggleAuthenticationComponent()
+
+      return Promise.reject(error)
+  }
+
+    return Promise.reject(error);
+})

@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="w-full">
     <div class="flex bg-white rounded-[25px] dropShadow overflow-x-hidden">
@@ -34,6 +36,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from 'axios'
+import { mapState, mapActions } from "pinia";
+
+import {useAuthenticationComponentStore} from "@/stores/AuthenticationComponentStore";
+import {useUserStore} from "@/stores/UserStore";
 
 export default defineComponent({
   name: "PostComponent",
@@ -42,11 +48,21 @@ export default defineComponent({
       postContent: "" as string
     }
   },
+  computed: {
+    ...mapState(useUserStore, ["isAuthenticated"]),
+
+  },
   methods: {
+    ...mapActions(useAuthenticationComponentStore, ["toggleAuthenticationComponent"]),
     reloadFeed() {
       this.$emit('reloadFeed')
     },
     async submitPost() {
+      if (!this.isAuthenticated) {
+        this.toggleAuthenticationComponent()
+        return
+      }
+
       if (!this.postContent) {
         return
       }

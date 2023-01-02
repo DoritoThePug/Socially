@@ -2,9 +2,11 @@
   import { storeToRefs } from 'pinia'
 
   import { useUserStore } from '@/stores/UserStore'
+  import { useAuthenticationComponentStore } from '@/stores/AuthenticationComponentStore'
 
-  const { isAuthenticated } = storeToRefs(useUserStore())
-  const { user } = storeToRefs(useUserStore())
+  const authenticationComponentStore = useAuthenticationComponentStore()
+
+  const { isAuthenticated, user } = storeToRefs(useUserStore())
 </script>
 
 <template>
@@ -22,7 +24,7 @@
       <button  v-if="isAuthenticated" @click="toggleDropDown">
         <img :src="user.get_profile_picture" alt="" class="w-[32px] h-[32px] rounded-full">
       </button>
-      <button v-else class="hover:text-secondary-100" @click="$parent.toggleAuthenticationPrompt">
+      <button v-else class="hover:text-secondary-100" @click="authenticationComponentStore.toggleAuthenticationComponent()">
         <i class="fa-solid fa-right-to-bracket text-[24px]"></i>
       </button>
 
@@ -36,7 +38,7 @@
             <i class="fa-solid fa-gear fa-md mr-[32px]"></i>
             Settings
           </button>
-          <button class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500] text-error">
+          <button @click="logout" class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500] text-error">
             <i class="fa-solid fa-right-from-bracket fa-md mr-[32px]"></i>
             Logout
           </button>
@@ -49,6 +51,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapState } from "pinia";
+import { mapActions } from "pinia";
 
 import { useUserStore } from '@/stores/UserStore'
 
@@ -62,9 +65,11 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapState(useUserStore, ['isAuthenticated', 'user'])
+    ...mapState(useUserStore, ['isAuthenticated', 'user']),
+
   },
   methods: {
+    ...mapActions(useUserStore, ['logoutUser']),
     toggleDropDown() {
       this.showDropDown = !this.showDropDown
     },
@@ -73,6 +78,10 @@ export default defineComponent({
     },
     goToHome() {
       this.$router.push('/')
+    },
+    logout() {
+      this.logoutUser()
+      this.goToHome()
     }
   }
 });

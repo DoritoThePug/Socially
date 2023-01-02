@@ -12,6 +12,10 @@ export const useUserStore = defineStore("userStore", {
     authenticate(token:string, user:User):void {
       this.isAuthenticated = true
       this.user = user
+    },
+    logoutUser():void {
+      this.isAuthenticated = false
+      this.user = {} as User
     }
   },
   persist: true
