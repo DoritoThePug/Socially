@@ -24,7 +24,7 @@
       <button  v-if="isAuthenticated" @click="toggleDropDown">
         <img :src="user.get_profile_picture" alt="" class="w-[32px] h-[32px] rounded-full">
       </button>
-      <button v-else class="hover:text-secondary-100" @click="authenticationComponentStore.toggleAuthenticationComponent()">
+      <button v-else class="hover:text-secondary-100" @click="authenticationComponentStore.navBarToggle()">
         <i class="fa-solid fa-right-to-bracket text-[24px]"></i>
       </button>
 

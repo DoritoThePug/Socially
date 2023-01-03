@@ -13,6 +13,14 @@ export const useAuthenticationComponentStore = defineStore("authenticationCompon
         toggleSignUpComponent() {
             this.isSignUpComponentOpen = !this.isSignUpComponentOpen
             this.isAuthenticationComponentOpen = false
+        },
+        navBarToggle() {
+            if (this.isAuthenticationComponentOpen || this.isSignUpComponentOpen) {
+                this.isAuthenticationComponentOpen = false
+                this.isSignUpComponentOpen = false
+            } else {
+                this.toggleAuthenticationComponent()
+            }
         }
     }
 })
