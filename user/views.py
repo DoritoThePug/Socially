@@ -23,9 +23,9 @@ class CreateUser(APIView):
                 email=request.data["email"],
                 password=request.data["password"],
                 username=request.data["username"],
-                profile_picture=request.data["profile_picture"],
-                bio=request.data["bio"],
-                slug=slugify(request.data["slug"])
+                # profile_picture=request.data["profile_picture"],
+                # bio=request.data["bio"],
+                # slug=slugify(request.data["slug"])
             )
         except KeyError:
             return Response("KeyError", status=status.HTTP_400_BAD_REQUEST)
@@ -87,7 +87,20 @@ class UserDetails(APIView):
         return Response({"user": serializer.data, "is_following": False}, status=status.HTTP_200_OK)
 
 
+class UpdateUser(APIView):
+    def patch(self, request, format=None):
+        auth_token = request.COOKIES.get('token').split(' ')[1]
 
+        user = Token.objects.get(key=auth_token).user
+
+        serializer = UserSerializer(user, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
