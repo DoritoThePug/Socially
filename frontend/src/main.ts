@@ -18,7 +18,7 @@ axios.defaults.withCredentials = true
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-export const app = createApp(App)
+const app = createApp(App)
 app.use(router)
 
 app.use(pinia)
@@ -50,3 +50,17 @@ axios.interceptors.response.use(function (config) {
 
     return Promise.reject(error);
 })
+
+app.directive('click-outside', {
+  mounted(el, binding, vnode) {
+    el.clickOutsideEvent = function(event:any) {
+      if (!(el === event.target || el.contains(event.target))) {
+        binding.value(event, el);
+      }
+    };
+    document.body.addEventListener('click', el.clickOutsideEvent);
+  },
+  unmounted(el) {
+    document.body.removeEventListener('click', el.clickOutsideEvent);
+  }
+});
