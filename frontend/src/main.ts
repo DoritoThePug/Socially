@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 import axios from 'axios'
 import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import Cookie from 'js-cookie'
 
 import App from './App.vue'
 import router from './router'
@@ -11,7 +12,7 @@ import {useAuthenticationComponentStore} from "@/stores/AuthenticationComponentS
 
 
 
-axios.defaults.baseURL = "http://192.168.88.109:8000"
+axios.defaults.baseURL = "http://192.168.21.15:8000"
 axios.defaults.withCredentials = true
 
 const pinia = createPinia()
@@ -23,8 +24,23 @@ app.use(router)
 app.use(pinia)
 app.mount('#app')
 
+
+axios.interceptors.request.use(function (config) {
+    const csrftoken = Cookie.get("csrftoken")
+
+    config.headers = {
+        ...config.headers,
+        "X-CSRFToken": `${csrftoken}`
+    }
+
+    return config
+}, function (error) {
+    return Promise.reject(error)
+})
+
+
 axios.interceptors.response.use(function (config) {
-    return config;
+    return config
 }, function (error) {
   if (error.response.status == 401) {
       useAuthenticationComponentStore().toggleAuthenticationComponent()

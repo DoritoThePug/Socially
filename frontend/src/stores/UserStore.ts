@@ -17,9 +17,6 @@ export const useUserStore = defineStore("userStore", {
     logoutUser():void {
       this.isAuthenticated = false
       this.user = {} as User
-      Cookies.remove('token')
-      Cookies.remove('csrftoken')
-      Cookies.remove('sessionid')
     }
   },
   persist: true

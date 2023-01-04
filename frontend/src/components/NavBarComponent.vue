@@ -52,6 +52,7 @@
 import { defineComponent } from 'vue'
 import { mapState } from "pinia";
 import { mapActions } from "pinia";
+import axios from 'axios'
 
 import { useUserStore } from '@/stores/UserStore'
 
@@ -80,8 +81,12 @@ export default defineComponent({
       this.$router.push('/')
     },
     logout() {
-      this.logoutUser()
-      this.goToHome()
+      axios.post("/api/logout/", {}, {withCredentials: true}).then(response => {
+        this.logoutUser()
+        this.goToHome()
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 });

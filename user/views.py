@@ -133,6 +133,14 @@ class FollowUser(APIView):
 
         serializer = UserSerializer(following_user)
 
-        return Response({"user": serializer.data, "is_following":is_following}, status=status.HTTP_200_OK)
+        return Response({"user": serializer.data, "is_following": is_following}, status=status.HTTP_200_OK)
 
 
+class Logout(APIView):
+    def post(self, request, format=None):
+        response = Response()
+        response.delete_cookie("token")
+        response.delete_cookie("csrftoken")
+        response.delete_cookie("sessionid")
+
+        return response
