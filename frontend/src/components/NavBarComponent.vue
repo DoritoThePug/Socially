@@ -87,6 +87,7 @@ export default defineComponent({
     },
     goToHome() {
       this.$router.push('/')
+      this.$router.go(0)
     },
     logout() {
       axios.post("/api/logout/", {}, {withCredentials: true}).then(response => {

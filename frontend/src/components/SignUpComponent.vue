@@ -39,7 +39,7 @@
         </div>
         <p v-if="repeatPasswordError" class="text-[9px] text-error mt-[-8px] mb-[8px]">{{ this.repeatPasswordError }}</p>
 
-        <div class="flex flex-row items-center justify-between mb-[16px]">
+        <div class="flex flex-row items-center mb-[16px]">
           <input
               class="mr-[4px] w-[12px] h-[12px] appearance-none border-[1px] border-black-25 rounded-[2px] checked:bg-secondary-100 hover:border-black-50"
               type="checkbox"
@@ -77,6 +77,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios'
+import {useUserStore} from "@/stores/UserStore";
+import {useAuthenticationComponentStore} from "@/stores/AuthenticationComponentStore";
 
 export default defineComponent({
   name: "SignUpComponent",
@@ -135,8 +137,15 @@ export default defineComponent({
           email: this.email,
           username: this.username,
           password: this.password,
-        }).then(response => {
-          console.log(response)
+        }).then(async response => {
+          await axios.post('/api/log-in/', {
+            email: this.email,
+            password: this.password
+          }, {withCredentials: true}).then(response => {
+            useUserStore().authenticate(response.data.token, response.data.user)
+            useAuthenticationComponentStore().toggleSignUpComponent()
+          })
+
         }).catch(error => {
           console.log(error)
         })

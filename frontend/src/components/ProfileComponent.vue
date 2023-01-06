@@ -1,5 +1,16 @@
 <script setup lang="ts">
+  import {useAuthenticationComponentStore} from "@/stores/AuthenticationComponentStore";
+  import {ref} from 'vue'
+  import {vOnClickOutside} from "@vueuse/components";
+
   const formatter = Intl.NumberFormat('en', {notation: 'compact'})
+
+  const authenticationStore = useAuthenticationComponentStore()
+
+  const showDropDown = ref(false)
+  function toggleDropDown() {
+    showDropDown.value = !showDropDown.value
+  }
 </script>
 
 <template>
@@ -26,9 +37,22 @@
               Following
             </button>
 
-            <button>
+            <button @click="toggleDropDown">
               <i class="fa-solid fa-ellipsis-vertical"></i>
             </button>
+
+            <div v-if="showDropDown" v-on-click-outside="toggleDropDown" class="relative">
+              <div class="rounded-[25px] absolute bg-white dropShadow top-[96px] right-[-32px] py-[24px] px-[32px] flex flex-col space-y-[16px]">
+                <button @click="authenticationStore.toggleAccountDetailsComponent()" class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500]">
+                  <i class="fa-solid fa-pen-to-square fa-md mr-[32px]"></i>
+                  Edit
+                </button>
+                <button class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500] text-error">
+                  <i class="fa-solid fa-right-from-bracket fa-md mr-[32px]"></i>
+                  Logout
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -60,7 +84,7 @@ export default defineComponent({
     return {
       user: {} as User,
       posts: [] as Post[],
-      isFollowing: false
+      isFollowing: false,
     }
   },
   methods: {
@@ -92,6 +116,9 @@ export default defineComponent({
         .catch((error) => {
           console.log(error)
         })
+    },
+    showDropDown() {
+
     }
   },
   mounted() {

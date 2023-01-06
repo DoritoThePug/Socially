@@ -5,7 +5,7 @@ import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponen
 
 const authenticationStore = useAuthenticationComponentStore();
 
-const { isAuthenticationComponentOpen, isSignUpComponentOpen } = storeToRefs(
+const { isAuthenticationComponentOpen, isSignUpComponentOpen, isAccountDetailsComponentOpen } = storeToRefs(
   useAuthenticationComponentStore()
 );
 </script>
@@ -14,6 +14,8 @@ const { isAuthenticationComponentOpen, isSignUpComponentOpen } = storeToRefs(
   <div class="w-full h-full mx-auto">
     <AuthenticationComponent v-if="isAuthenticationComponentOpen" class="fixed z-20"/>
     <SignUpComponent v-if="isSignUpComponentOpen" class="fixed z-20"/>
+    <AccountDetailsComponent v-if="isAccountDetailsComponentOpen" class="fixed z-20"/>
+
 
     <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0 z-50">
       <NavBarComponent />
@@ -47,6 +49,7 @@ const { isAuthenticationComponentOpen, isSignUpComponentOpen } = storeToRefs(
   import SidebarComponent from './components/SidebarComponent.vue';
   import AuthenticationComponent from './components/AuthenticationComponent.vue'
   import SignUpComponent from './components/SignUpComponent.vue';
+  import AccountDetailsComponent from "@/components/AccountDetailsComponent.vue";
 
 
 
@@ -59,7 +62,8 @@ const { isAuthenticationComponentOpen, isSignUpComponentOpen } = storeToRefs(
       FriendsComponent,
 
       AuthenticationComponent,
-      SignUpComponent
+      SignUpComponent,
+      AccountDetailsComponent
     },
   })
 </script>
