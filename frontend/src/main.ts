@@ -12,7 +12,7 @@ import {useAuthenticationComponentStore} from "@/stores/AuthenticationComponentS
 
 
 
-axios.defaults.baseURL = "http://192.168.21.15:8000"
+axios.defaults.baseURL = "http://192.168.88.126:8000"
 axios.defaults.withCredentials = true
 
 const pinia = createPinia()

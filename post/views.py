@@ -54,16 +54,22 @@ class GetUserPosts(APIView):
 
 
 class PostDetail(APIView):
-    def get_object(self, post_id):
-        try:
-            return Post.objects.get(id=post_id)
-        except Post.DoesNotExist:
-            return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
+    def get(self, request, user_slug, post_id, format=None):
+        users = get_user_model()
 
-    def get(self, request, post_id, format=None):
-        post = self.get_object(post_id)
-        serializer = PostSerializer(post)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        user = users.objects.get(slug=user_slug)
+
+        if user is None:
+            return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        post = Post.objects.get(author=user, id=post_id)
+
+        if post is not None:
+            serializer = PostSerializer(post)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response("Post not found", status=status.HTTP_404_NOT_FOUND)
 
 
 class LikePost(APIView):

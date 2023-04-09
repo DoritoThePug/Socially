@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import FeedView from '../views/FeedView.vue';
 import AccountView from "@/views/AccountView.vue";
+import PostView from "@/views/PostView.vue";
 
 const routes = [
   {
@@ -13,8 +14,12 @@ const routes = [
     path: '/profile/:user_slug',
     name: 'profile',
     component: AccountView,
-    props: true
   },
+  {
+    path: '/post/:user_slug/:post_id',
+    name: 'post',
+    component: PostView,
+  }
 ]
 
 const router = createRouter({

@@ -72,7 +72,10 @@ class UserDetails(APIView):
         if user is None:
             return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
 
-        auth_token = request.COOKIES.get('token').split(' ')[1]
+        auth_token = None
+
+        if request.COOKIES.get('token'):
+            auth_token = request.COOKIES.get('token').split(' ')[1]
 
         serializer = UserSerializer(user)
 
