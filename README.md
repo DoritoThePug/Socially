@@ -3,7 +3,7 @@ Mock up social media site inspired by Twitter, run using ```npm run serve``` in 
 
 Stack
 
-  Frontend: Javascript, Vue.js, TailwindCSS, Pinia, Vuex
+  Frontend: Typescript, Vue.js, TailwindCSS, Pinia, Vuex
   
   Backend: Python, Django
   
