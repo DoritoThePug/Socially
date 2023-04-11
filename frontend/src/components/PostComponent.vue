@@ -34,7 +34,7 @@
           <i class="fa-solid fa-comment text-[24px] text-black-75"></i>
           <p>7k comments</p>
         </button>
-        <button class="flex items-center space-x-[8px]">
+        <button class="flex items-center space-x-[8px]" @click="sharePost">
           <i class="fa-solid fa-share text-[24px] text-black-75"></i>
           <p>1k shares</p>
         </button>
@@ -61,7 +61,8 @@ export default defineComponent({
   data() {
     return {
       isLiked: false,
-      localPost: this.post as Post
+      localPost: this.post as Post,
+      postUrl: ''
     }
   },
   computed: {
@@ -83,12 +84,26 @@ export default defineComponent({
       }).catch(error => {
         console.log(error)
       })
+    },
+    getPostUrl() {
+      this.postUrl = `${window.location.origin}/${this.post.author.username}/post/${this.post.id}`
+    },
+    sharePost() {
+      navigator.share({
+        title: 'Share Post',
+        text: this.post.content,
+        url: this.postUrl
+      }).then(() => {
+        console.log('Thanks for sharing!')
+      }).catch(console.error)
     }
   },
   mounted() {
     if (this.isAuthenticated) {
       this.isPostLiked()
     }
+
+    this.getPostUrl()
   }
 });
 </script>

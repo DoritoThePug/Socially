@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-^ljy7l9u&3_pkz-z+-$fx34epfk1xz_116-f1p29$k*0l&=6s7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ["http://192.168.88.126:8080"]
+CSRF_TRUSTED_ORIGINS = ["http://192.168.88.126:8080", "https://192.168.88.126:8080"]
 
 ALLOWED_HOSTS = ['192.168.88.126']
 
@@ -47,17 +47,22 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'corsheaders',
+    'sslserver',
 
     'post',
     'user'
 ]
+
+SSL_CERTIFICATE = '/certs/cert.pem'
+SSL_PRIVATE_KEY = '/certs/key.pem'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://192.168.88.109:8080",
-    "http://192.168.88.126:8080"
+    "http://192.168.88.126:8080",
+    "https://192.168.88.126:8080"
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [

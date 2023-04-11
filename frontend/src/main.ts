@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 
+// import fs from 'fs'
+// import https from 'https'
 import axios from 'axios'
+import https from 'https'
 import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import Cookie from 'js-cookie'
@@ -10,10 +13,23 @@ import router from './router'
 
 import {useAuthenticationComponentStore} from "@/stores/AuthenticationComponentStore";
 
+// const httpsAgent = new https.Agent({
+//   rejectUnauthorized: false, // (NOTE: this will disable client verification)
+//   cert: fs.readFileSync("./certs/cert.pem"),
+//   key: fs.readFileSync("./certs/key.pem"),
+//   passphrase: "Jadenjin904119"
+// })
 
+// const instance = axios.create({ httpsAgent })
 
-axios.defaults.baseURL = "http://192.168.88.126:8000"
+axios.defaults.baseURL = "https://192.168.88.126:8000"
 axios.defaults.withCredentials = true
+
+const agent = new https.Agent({
+    rejectUnauthorized: false
+})
+
+axios.defaults.httpsAgent = agent
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
@@ -23,6 +39,8 @@ app.use(router)
 
 app.use(pinia)
 app.mount('#app')
+
+
 
 
 axios.interceptors.request.use(function (config) {
