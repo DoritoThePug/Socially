@@ -20,7 +20,7 @@
 
     <div class="flex flex-row justify-between items-center">
       <button @click="goToHome" class="bg-gradient-to-r from-primary-100 to-secondary-100 text-transparent bg-clip-text font-bold text-[22px] leading-[31px]">SOCIALLY</button>
-      <div class="flex ml-auto w-[400px] bg-black-10 h-[32px] rounded-[10px] mr-[16px] py-[8px] px-[16px] content-center">
+      <div class="flex ml-auto w-[400px] bg-black-10 h-[32px] rounded-[10px] mr-[16px] py-[8px] px-[16px] content-center hover:drop-shadow">
         <input class="bg-black-10 w-full overflow-hidden focus: outline-none font-['roboto'] text-[14px]" type="text" placeholder="Search"/>
         <i class="fa-solid fa-magnifying-glass text-primary-100 text-black-50"></i>
       </div>
