@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 from corsheaders.defaults import default_headers
 
@@ -22,14 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^ljy7l9u&3_pkz-z+-$fx34epfk1xz_116-f1p29$k*0l&=6s7'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ["http://192.168.88.126:8080", "https://192.168.88.126:8080"]
+CSRF_TRUSTED_ORIGINS = ["http://192.168.88.126:8080", "https://192.168.88.121:8080"]
 
-ALLOWED_HOSTS = ['192.168.88.126']
+ALLOWED_HOSTS = ['192.168.88.121']
 
 
 # Application definition
@@ -53,16 +54,14 @@ INSTALLED_APPS = [
     'user'
 ]
 
-SSL_CERTIFICATE = '/certs/cert.pem'
-SSL_PRIVATE_KEY = '/certs/key.pem'
-
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://192.168.88.109:8080",
     "http://192.168.88.126:8080",
-    "https://192.168.88.126:8080"
+    "https://192.168.88.126:8080",
+    "https://192.168.88.121:8080"
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [

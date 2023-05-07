@@ -17,7 +17,7 @@ const { isAuthenticationComponentOpen, isSignUpComponentOpen, isAccountDetailsCo
     <AccountDetailsComponent v-if="isAccountDetailsComponentOpen" class="fixed z-20"/>
 
 
-    <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0 z-50">
+    <div class="bg-white rounded-[15px] dropShadow px-[32px] py-[20px] h-min sticky top-0 z-10">
       <NavBarComponent />
     </div>
     <div class="flex">

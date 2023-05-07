@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex flex-col">
-      <PostComponent :post="post"/>
+      <PostComponent v-if="!loadingData" :post="post"/>
     </div>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default defineComponent({
   },
   data() {
     return {
-      post: {} as post
+      post: {} as post,
+      loadingData: true
     }
   },
   methods: {
@@ -29,6 +30,7 @@ export default defineComponent({
       await axios.get(`/api/posts/${this.$route.params.user_slug}/${this.$route.params.post_id}/`)
         .then((response) => {
           this.post = response.data;
+          console.log(this.post)
         })
         .catch((error) => {
           console.log(error);
@@ -37,10 +39,11 @@ export default defineComponent({
         console.log(this.post)
     }
 
-
   },
-  mounted() {
-    this.getPost()
+  created() {
+    this.getPost().then(() => {
+      this.loadingData = false
+    })
   }
 });
 </script>
