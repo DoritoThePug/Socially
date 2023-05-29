@@ -1,5 +1,7 @@
 <template>
-  <div class="2xl:w-full xl:w-full lg:w-[64px] md:w-[64px] sm:w-[64px]">
+  <div
+    class="2xl:w-full xl:w-full lg:w-[64px] md:w-[64px] sm:w-[64px] flex flex-col"
+  >
     <nav class="bg-white rounded-[25px] py-[32px] space-y-[8px] dropShadow">
       <router-link
         to="/"
@@ -56,6 +58,12 @@
         <h1 class="sidebarText">Settings</h1>
       </router-link>
     </nav>
+
+    <div
+      class="rounded-full bg-primary-100 h-[48px] w-[48px] xl:hidden mt-[32px] flex justify-center items-center self-center"
+    >
+      <i class="fa-solid fa-plus text-[24px] text-white"></i>
+    </div>
   </div>
 </template>
 
