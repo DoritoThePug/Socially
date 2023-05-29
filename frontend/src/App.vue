@@ -38,7 +38,9 @@ const {
       <div class="w-[56%] p-[32px]">
         <router-view />
       </div>
-      <div class="w-[22%] p-[32px] space-y-[32px] h-min sticky top-[74px]">
+      <div
+        class="hidden w-[22%] p-[32px] space-y-[32px] h-min sticky top-[74px] 2xl:block xl:block lg:block"
+      >
         <NotificationComponent />
         <FriendsComponent />
       </div>
