@@ -32,7 +32,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=False, blank=False)
     username = models.CharField(max_length=30, null=False, blank=False, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    profile_picture = models.ImageField(upload_to='uploads/', default="uploads/download_zfPDxSb.jfif",blank=False, null=False)
+    profile_picture = models.ImageField(upload_to='uploads/', default="default-user-image.png",blank=False, null=False)
     bio = models.CharField(max_length=255, blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)

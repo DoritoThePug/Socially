@@ -38,11 +38,7 @@ class AuthenticateUser(APIView):
         email = request.data["email"]
         password = request.data["password"]
 
-        print(email, password)
-
         user = authenticate(email=email, password=password)
-
-        print(user)
 
         if user is not None:
             login(request, user)
@@ -57,7 +53,7 @@ class AuthenticateUser(APIView):
                 key='token',
                 value=f"Token {auth_token.key}",
                 httponly=True,
-                max_age=datetime.timedelta(days=30)
+                max_age=2592000
             )
 
             return response
