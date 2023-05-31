@@ -8,7 +8,7 @@ const authenticationStore = useAuthenticationComponentStore();
 const {
   isAuthenticationComponentOpen,
   isSignUpComponentOpen,
-  isAccountDetailsComponentOpen,
+  isAccountInfoComponentOpen,
 } = storeToRefs(useAuthenticationComponentStore());
 </script>
 
@@ -19,8 +19,8 @@ const {
       class="fixed z-20"
     />
     <SignUpComponent v-if="isSignUpComponentOpen" class="fixed z-20" />
-    <AccountDetailsComponent
-      v-if="isAccountDetailsComponentOpen"
+    <AccountInfoComponent
+      v-if="isAccountInfoComponentOpen"
       class="fixed z-20"
     />
 
@@ -57,7 +57,7 @@ import FriendsComponent from "./components/FriendsComponent.vue";
 import SidebarComponent from "./components/SidebarComponent.vue";
 import AuthenticationComponent from "./components/AuthenticationComponent.vue";
 import SignUpComponent from "./components/SignUpComponent.vue";
-import AccountDetailsComponent from "@/components/AccountDetailsComponent.vue";
+import AccountInfoComponent from "./components/AccountInfoComponent.vue";
 
 export default defineComponent({
   name: "App",
@@ -69,7 +69,7 @@ export default defineComponent({
 
     AuthenticationComponent,
     SignUpComponent,
-    AccountDetailsComponent,
+    AccountInfoComponent,
   },
 });
 </script>

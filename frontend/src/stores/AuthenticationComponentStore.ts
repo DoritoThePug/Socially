@@ -1,34 +1,38 @@
 import { defineStore } from "pinia";
 
-export const useAuthenticationComponentStore = defineStore("authenticationComponentStore", {
+export const useAuthenticationComponentStore = defineStore(
+  "authenticationComponentStore",
+  {
     state: () => ({
-        isAuthenticationComponentOpen: false,
-        isSignUpComponentOpen: false,
-        isAccountDetailsComponentOpen: false
+      isAuthenticationComponentOpen: false,
+      isSignUpComponentOpen: false,
+      isAccountInfoComponentOpen: false,
     }),
     actions: {
-        toggleAuthenticationComponent() {
-            this.isAuthenticationComponentOpen = !this.isAuthenticationComponentOpen
-            this.isSignUpComponentOpen = false
-            this.isAccountDetailsComponentOpen = false
-        },
-        toggleSignUpComponent() {
-            this.isSignUpComponentOpen = !this.isSignUpComponentOpen
-            this.isAuthenticationComponentOpen = false
-            this.isAccountDetailsComponentOpen = false
-        },
-        navBarToggle() {
-            if (this.isAuthenticationComponentOpen || this.isSignUpComponentOpen) {
-                this.isAuthenticationComponentOpen = false
-                this.isSignUpComponentOpen = false
-            } else {
-                this.toggleAuthenticationComponent()
-            }
-        },
-        toggleAccountDetailsComponent() {
-            this.isAccountDetailsComponentOpen = !this.isAccountDetailsComponentOpen
-            this.isSignUpComponentOpen = false
-            this.isAuthenticationComponentOpen = false
+      toggleAuthenticationComponent() {
+        this.isAuthenticationComponentOpen =
+          !this.isAuthenticationComponentOpen;
+        this.isSignUpComponentOpen = false;
+        this.isAccountInfoComponentOpen = false;
+      },
+      toggleSignUpComponent() {
+        this.isSignUpComponentOpen = !this.isSignUpComponentOpen;
+        this.isAuthenticationComponentOpen = false;
+        this.isAccountInfoComponentOpen = false;
+      },
+      navBarToggle() {
+        if (this.isAuthenticationComponentOpen || this.isSignUpComponentOpen) {
+          this.isAuthenticationComponentOpen = false;
+          this.isSignUpComponentOpen = false;
+        } else {
+          this.toggleAuthenticationComponent();
         }
-    }
-})
+      },
+      toggleAccountInfoComponent() {
+        this.isAccountInfoComponentOpen = !this.isAccountInfoComponentOpen;
+        this.isSignUpComponentOpen = false;
+        this.isAuthenticationComponentOpen = false;
+      },
+    },
+  }
+);
