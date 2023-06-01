@@ -1,20 +1,3 @@
-<script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { vOnClickOutside } from "@vueuse/components";
-
-import { useUserStore } from "@/stores/UserStore";
-import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
-
-const authenticationComponentStore = useAuthenticationComponentStore();
-
-const { isAuthenticated, user } = storeToRefs(useUserStore());
-
-const showDropDown = ref(false);
-function toggleDropDown() {
-  showDropDown.value = !showDropDown.value;
-}
-</script>
-
 <template>
   <nav class="w-full">
     <div class="flex flex-row justify-between items-center">
@@ -43,22 +26,14 @@ function toggleDropDown() {
         <img
           :src="user.get_profile_picture"
           alt=""
-          class="w-[32px] h-[32px] rounded-full"
+          class="w-[32px] h-[32px] rounded-full object-none"
         />
       </button>
-      <button
-        v-else
-        class="hover:text-secondary-100"
-        @click="authenticationComponentStore.navBarToggle()"
-      >
+      <button v-else class="hover:text-secondary-100" @click="navBarToggle">
         <i class="fa-solid fa-right-to-bracket text-[24px]"></i>
       </button>
 
-      <div
-        v-on-click-outside="toggleDropDown"
-        v-if="showDropDown"
-        class="relative"
-      >
+      <div v-if="showDropDown" class="relative">
         <div
           class="rounded-[25px] absolute bg-white dropShadow top-[32px] right-[8px] py-[24px] px-[32px] flex flex-col space-y-[16px]"
         >
@@ -82,29 +57,25 @@ function toggleDropDown() {
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { ref } from "vue";
-import { mapState } from "pinia";
-import { mapActions } from "pinia";
+import { mapState, mapActions } from "pinia";
 import axios from "axios";
-import { onClickOutside } from "@vueuse/core";
 
 import { useUserStore } from "@/stores/UserStore";
+import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
 
 export default defineComponent({
   name: "NavBarComponent",
-  data() {
-    return {
-      // showDropDown: false
-    };
-  },
   computed: {
     ...mapState(useUserStore, ["isAuthenticated", "user"]),
+    ...mapActions(useAuthenticationComponentStore, ["navBarToggle"]),
+    ...mapActions(useUserStore, ["logoutUser"]),
+  },
+  data() {
+    return {
+      showDropDown: false as Boolean,
+    };
   },
   methods: {
-    ...mapActions(useUserStore, ["logoutUser"]),
-    // toggleDropDown() {
-    //   this.showDropDown = !this.showDropDown
-    // },
     goToProfile() {
       this.$router.push(`/profile/${this.user.username}`);
     },
@@ -115,7 +86,7 @@ export default defineComponent({
       axios
         .post("/api/logout/", {}, { withCredentials: true })
         .then((response) => {
-          this.logoutUser();
+          this.logoutUser;
           this.goToHome();
         })
         .catch((error) => {

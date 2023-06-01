@@ -1,8 +1,8 @@
-import { watch } from 'vue'
-import { defineStore } from 'pinia'
-import Cookies from 'js-cookie'
+import { watch } from "vue";
+import { defineStore } from "pinia";
+import Cookies from "js-cookie";
 
-import User from '../interfaces/user'
+import User from "../interfaces/user";
 
 export const useUserStore = defineStore("userStore", {
   state: () => ({
@@ -10,14 +10,17 @@ export const useUserStore = defineStore("userStore", {
     user: {} as User,
   }),
   actions: {
-    authenticate(token:string, user:User):void {
-      this.isAuthenticated = true
-      this.user = user
+    authenticate(token: string, user: User): void {
+      this.isAuthenticated = true;
+      this.user = user;
     },
-    logoutUser():void {
-      this.isAuthenticated = false
-      this.user = {} as User
-    }
+    logoutUser(): void {
+      this.isAuthenticated = false;
+      this.user = {} as User;
+    },
+    upadteUser(user: User): void {
+      this.user = user;
+    },
   },
-  persist: true
-})
+  persist: true,
+});

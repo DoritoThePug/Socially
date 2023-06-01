@@ -23,7 +23,6 @@ class CreateUser(APIView):
                 email=request.data["email"],
                 password=request.data["password"],
                 username=request.data["username"],
-
             )
         except KeyError:
             return Response("KeyError", status=status.HTTP_400_BAD_REQUEST)

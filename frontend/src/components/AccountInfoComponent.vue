@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
-
-const authenticationStore = useAuthenticationComponentStore();
-</script>
-
 <template>
   <div class="w-full h-full backdrop-blur-md flex place-content-center">
     <div
@@ -13,16 +7,43 @@ const authenticationStore = useAuthenticationComponentStore();
         <h2>Account Information</h2>
         <button
           class="ml-auto flex-none hover:text-secondary-100"
-          @click="authenticationStore.toggleAuthenticationComponent()"
+          @click="
+            useAuthenticationComponentStore.toggleAuthenticationComponent()
+          "
         >
           <i class="fa-solid fa-x"></i>
         </button>
       </div>
 
-      <div class="flex flex-row">
+      <form class="flex flex-row" @submit.prevent="submitAccountInfoChanges">
         <div class="mr-[16px]">
           <h3 class="fieldHeading">Profile Picture</h3>
-          <div class="h-[104px] w-[104px] bg-black-25 rounded-full"></div>
+          <div
+            class="h-[104px] w-[104px] bg-black-25 rounded-full group relative"
+          >
+            <img
+              class="rounded-full h-full w-full object-none"
+              :src="user.get_profile_picture"
+            />
+            <div
+              class="hidden group-hover:block absolute backdrop-blur-sm rounded-full top-0 left-0 h-full w-full flex place-content-center"
+            >
+              <label
+                for="pfpFile"
+                class="flex h-full w-full justify-center items-center"
+              >
+                <i class="fa-solid fa-arrow-up-from-bracket text-[24px]"></i>
+              </label>
+              <input
+                class="invisible"
+                type="file"
+                id="pfpFile"
+                accept="image/*"
+                ref="profileImageFile"
+                @change="submitAccountInfoChanges"
+              />
+            </div>
+          </div>
         </div>
         <div class="flex flex-col">
           <div class="flex flex-row">
@@ -35,7 +56,12 @@ const authenticationStore = useAuthenticationComponentStore();
                   // 'border-error': passwordError,
                 }"
               >
-                <input class="w-full bg-white focus:outline-none" type="text" />
+                <input
+                  class="w-full bg-white focus:outline-none"
+                  type="text"
+                  maxlength="30"
+                  v-model="firstName"
+                />
               </div>
             </div>
             <div>
@@ -47,7 +73,12 @@ const authenticationStore = useAuthenticationComponentStore();
                   // 'border-error': passwordError,
                 }"
               >
-                <input class="w-full bg-white focus:outline-none" type="text" />
+                <input
+                  class="w-full bg-white focus:outline-none"
+                  type="text"
+                  maxlength="30"
+                  v-model="lastName"
+                />
               </div>
             </div>
           </div>
@@ -63,7 +94,8 @@ const authenticationStore = useAuthenticationComponentStore();
               class="resize-none overflow-hidden focus: outline-none w-full min-h-[16px]"
               ref="bioInputTextArea"
               @input="adjustTextareaHeight"
-              maxlength="150"
+              maxlength="255"
+              v-model="bio"
             />
           </div>
           <button
@@ -72,18 +104,42 @@ const authenticationStore = useAuthenticationComponentStore();
             <h4 class="text-white">Save</h4>
           </button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import axios from "axios";
+import User from "@/interfaces/user";
+import { mapState, mapStores } from "pinia";
+
+import { useUserStore } from "@/stores/UserStore";
+import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
 
 export default defineComponent({
   name: "AccountInfoComponent",
   props: {
     partOfSignUp: Boolean, // Used to show/not show the "Complete Later" button
+  },
+  computed: {
+    ...mapState(useUserStore, ["user"]),
+    ...mapStores(useAuthenticationComponentStore),
+  },
+  data() {
+    return {
+      profilePicture: "",
+      firstName: "",
+      lastName: "",
+      bio: "",
+    };
+  },
+  mounted() {
+    this.profilePicture = this.user.get_profile_picture;
+    this.firstName = this.user.first_name;
+    this.lastName = this.user.last_name;
+    this.bio = this.user.bio;
   },
   methods: {
     adjustTextareaHeight() {
@@ -91,6 +147,26 @@ export default defineComponent({
 
       textarea.style.height = "auto";
       textarea.style.height = textarea.scrollHeight + "px";
+    },
+    async submitAccountInfoChanges() {
+      var formData = new FormData();
+      this.profilePicture = (this.$refs.profileImageFile as any).files[0];
+
+      console.log(this.profilePicture);
+
+      if (this.profilePicture != undefined) {
+        formData.append("profile_picture", this.profilePicture);
+      }
+
+      formData.append("first_name", this.firstName);
+      formData.append("last_name", this.lastName);
+      formData.append("bio", this.bio);
+
+      await axios
+        .patch("/api/update-user/", formData)
+        .then(async (response) => {
+          useUserStore().upadteUser(response.data);
+        });
     },
   },
 });

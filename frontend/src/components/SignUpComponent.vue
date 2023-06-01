@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
-
-const authenticationStore = useAuthenticationComponentStore();
-</script>
-
 <template>
   <div class="w-full h-full backdrop-blur-md flex place-content-center">
     <div
@@ -13,7 +7,7 @@ const authenticationStore = useAuthenticationComponentStore();
         <h2>Sign Up</h2>
         <button
           class="ml-auto flex-none hover:text-secondary-100"
-          @click="authenticationStore.toggleSignUpComponent()"
+          @click="toggleSignUpComponent"
         >
           <i class="fa-solid fa-x"></i>
         </button>
@@ -126,11 +120,8 @@ const authenticationStore = useAuthenticationComponentStore();
         </div>
       </div>
 
-      <button
-        class="self-center"
-        @click="authenticationStore.toggleAuthenticationComponent()"
-      >
-        <p class="inline">Already have an account?</p>
+      <button class="self-center" @click="toggleAuthenticationComponent">
+        <p class="inline">Already have an account? &nbsp</p>
         <p class="text-secondary-100 hover:text-secondary-80 inline">Log In</p>
       </button>
     </div>
@@ -140,6 +131,8 @@ const authenticationStore = useAuthenticationComponentStore();
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
+import { mapActions } from "pinia";
+
 import { useUserStore } from "@/stores/UserStore";
 import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
 
@@ -157,6 +150,12 @@ export default defineComponent({
       passwordError: "",
       repeatPasswordError: "",
     };
+  },
+  computed: {
+    ...mapActions(useAuthenticationComponentStore, [
+      "toggleAuthenticationComponent",
+      "toggleSignUpComponent",
+    ]),
   },
   methods: {
     validateAuthenticationForm(): boolean {
