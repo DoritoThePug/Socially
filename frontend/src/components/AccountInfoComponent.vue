@@ -7,9 +7,7 @@
         <h2>Account Information</h2>
         <button
           class="ml-auto flex-none hover:text-secondary-100"
-          @click="
-            useAuthenticationComponentStore.toggleAuthenticationComponent()
-          "
+          @click="toggleAuthenticationComponent"
         >
           <i class="fa-solid fa-x"></i>
         </button>
@@ -113,7 +111,7 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import User from "@/interfaces/user";
-import { mapState, mapStores } from "pinia";
+import { mapState, mapActions } from "pinia";
 
 import { useUserStore } from "@/stores/UserStore";
 import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponentStore";
@@ -125,7 +123,7 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useUserStore, ["user"]),
-    ...mapStores(useAuthenticationComponentStore),
+    ...mapActions(useAuthenticationComponentStore, ["toggleAccountInfoComponent"])
   },
   data() {
     return {

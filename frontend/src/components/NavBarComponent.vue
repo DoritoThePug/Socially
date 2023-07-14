@@ -22,11 +22,15 @@
       <button class="mr-[32px] text-[20px]">
         <i class="fa-solid fa-sun"></i>
       </button>
-      <button v-if="isAuthenticated" @click="showDropDown = !showDropDown">
+      <button
+        v-if="isAuthenticated"
+        @click="showDropDown = !showDropDown"
+        class="z-[50px]"
+      >
         <img
           :src="user.get_profile_picture"
-          alt=""
-          class="w-[32px] h-[32px] rounded-full object-none"
+          alt="https://192.168.88.122:8000/media/default-user-image.png"
+          class="w-[32px] h-[32px] rounded-full"
         />
       </button>
       <button v-else class="hover:text-secondary-100" @click="navBarToggle">

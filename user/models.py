@@ -48,7 +48,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
     def get_profile_picture(self):
-        return 'https://192.168.88.121:8000' + self.profile_picture.url
+        return 'https://192.168.88.122:8000' + self.profile_picture.url
 
     def __str__(self):
         return self.username

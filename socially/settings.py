@@ -28,9 +28,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ["http://192.168.88.126:8080", "https://192.168.88.121:8080"]
+CSRF_TRUSTED_ORIGINS = ["https://192.168.88.122:8080"]
 
-ALLOWED_HOSTS = ['192.168.88.121']
+ALLOWED_HOSTS = ['192.168.88.122']
 
 
 # Application definition
