@@ -7,7 +7,7 @@
         <h2>Account Information</h2>
         <button
           class="ml-auto flex-none hover:text-secondary-100"
-          @click="toggleAuthenticationComponent"
+          @click="toggleAccountInfoComponent"
         >
           <i class="fa-solid fa-x"></i>
         </button>
@@ -143,7 +143,6 @@ export default defineComponent({
     adjustTextareaHeight() {
       const textarea = this.$refs.bioInputTextArea as HTMLTextAreaElement;
 
-      textarea.style.height = "auto";
       textarea.style.height = textarea.scrollHeight + "px";
     },
     async submitAccountInfoChanges() {
@@ -152,7 +151,7 @@ export default defineComponent({
 
       console.log(this.profilePicture);
 
-      if (this.profilePicture != undefined) {
+      if (this.profilePicture !== undefined) {
         formData.append("profile_picture", this.profilePicture);
       }
 

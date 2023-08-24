@@ -22,7 +22,7 @@ import { useAuthenticationComponentStore } from "@/stores/AuthenticationComponen
 
 // const instance = axios.create({ httpsAgent })
 
-axios.defaults.baseURL = "https://192.168.88.122:8000";
+axios.defaults.baseURL = "https://192.168.88.123:8000";
 axios.defaults.withCredentials = true;
 
 const agent = new https.Agent({

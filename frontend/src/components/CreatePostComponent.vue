@@ -100,7 +100,6 @@ export default defineComponent({
     adjustTextareaHeight() {
       const textarea = this.$refs.postInputTextArea as HTMLTextAreaElement;
 
-      textarea.style.height = "auto";
       textarea.style.height = textarea.scrollHeight + "px";
     },
   },

@@ -28,9 +28,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ["https://192.168.88.122:8080"]
+CSRF_TRUSTED_ORIGINS = ["https://192.168.88.123:8080"]
 
-ALLOWED_HOSTS = ['192.168.88.122']
+ALLOWED_HOSTS = ['192.168.88.123']
 
 
 # Application definition
@@ -86,8 +86,7 @@ ROOT_URLCONF = 'socially.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,15 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'socially.authentication.CookieTokenAuthentication',
-#         # 'rest_framework.authentication.TokenAuthentication',
-#     ),
-# }
-
 AUTH_USER_MODEL = 'user.CustomUser'
-
 
 
 # Internationalization

@@ -43,12 +43,12 @@
 
             <div v-if="showDropDown" v-on-click-outside="toggleDropDown" class="relative">
               <div class="rounded-[25px] absolute bg-white dropShadow top-[96px] right-[-32px] py-[24px] px-[32px] flex flex-col space-y-[16px]">
-                <button @click="authenticationStore.toggleAccountDetailsComponent()" class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500]">
-                  <i class="fa-solid fa-pen-to-square fa-md mr-[32px]"></i>
+                <button @click="authenticationStore.toggleAccountInfoComponent()" class="flex flex-row items-center text-[18px] font-['roboto'] font-[500]">
+                  <i class="fa-solid fa-pen-to-square fa-md mr-[16px]"></i>
                   Edit
                 </button>
-                <button class="flex flex-row items-center text-[18px] font-['brandon-grotesque'] font-[500] text-error">
-                  <i class="fa-solid fa-right-from-bracket fa-md mr-[32px]"></i>
+                <button class="flex flex-row items-center text-[18px] font-['roboto'] font-[500] text-error">
+                  <i class="fa-solid fa-right-from-bracket fa-md mr-[16px]"></i>
                   Logout
                 </button>
               </div>

@@ -1,14 +1,9 @@
-import datetime
-
 from django.contrib.auth import authenticate, login
-from django.template.defaultfilters import slugify
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from socially.authentication import CookieTokenAuthentication
 from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from .models import CustomUser
 from .serializers import UserSerializer
@@ -19,7 +14,7 @@ from .serializers import UserSerializer
 class CreateUser(APIView):
     def post(self, request, format=None):
         try:
-            user = CustomUser.objects.create_user(
+            CustomUser.objects.create_user(
                 email=request.data["email"],
                 password=request.data["password"],
                 username=request.data["username"],
@@ -54,8 +49,8 @@ class AuthenticateUser(APIView):
             )
 
             return response
-        else:
-            return Response("Invalid credentials", status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response("Invalid credentials", status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserDetails(APIView):
@@ -99,7 +94,6 @@ class UpdateUser(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class FollowUser(APIView):
     authentication_classes = (CookieTokenAuthentication, )
 
@@ -111,7 +105,8 @@ class FollowUser(APIView):
         if user is None:
             return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
 
-        following_user = CustomUser.objects.get(slug=following_user_slug) # User being followed
+        following_user = CustomUser.objects.get(
+            slug=following_user_slug)  # User being followed
 
         is_following = False
 

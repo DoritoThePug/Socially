@@ -41,16 +41,16 @@
         <div
           class="rounded-[25px] absolute bg-white dropShadow top-[32px] right-[8px] py-[24px] px-[32px] flex flex-col space-y-[16px]"
         >
-          <button @click="goToProfile" class="navbarPopup">
-            <i class="fa-solid fa-user fa-md mr-[32px]"></i>
+          <button @click="goToProfile" class="navbarPopup text-[18px] font-['roboto'] font-[500]">
+            <i class="fa-solid fa-user fa-md mr-[16px]"></i>
             Profile
           </button>
-          <button class="navbarPopup">
-            <i class="fa-solid fa-gear fa-md mr-[32px]"></i>
+          <button class="navbarPopup text-[18px] font-['roboto'] font-[500]">
+            <i class="fa-solid fa-gear fa-md mr-[16px]"></i>
             Settings
           </button>
-          <button @click="logout" class="navbarPopup text-error">
-            <i class="fa-solid fa-right-from-bracket fa-md mr-[32px]"></i>
+          <button @click="logout" class="navbarPopup text-error text-[18px] font-['roboto'] font-[500]">
+            <i class="fa-solid fa-right-from-bracket fa-md mr-[16px]"></i>
             Logout
           </button>
         </div>
@@ -76,7 +76,7 @@ export default defineComponent({
   },
   data() {
     return {
-      showDropDown: false as Boolean,
+      showDropDown: false as boolean,
     };
   },
   methods: {

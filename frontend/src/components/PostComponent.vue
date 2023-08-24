@@ -117,7 +117,7 @@ export default defineComponent({
       }).catch(console.error)
     },
     goToPostDetailPage() {
-      if (this.$route.name != 'post') {
+      if (this.$route.name !== 'post') {
           this.$router.push({
               name: 'post',
               params: {

@@ -38,7 +38,7 @@ class LatestPosts(APIView):
 
 
 class GetUserPosts(APIView):
-    def get(self, request, user_slug,format=None):
+    def get(self, request, user_slug, format=None):
         users = get_user_model()
 
         user = users.objects.get(slug=user_slug)
@@ -112,8 +112,8 @@ class LikePost(APIView):
 
         if user in post.likes.all():
             return Response({"isLiked": True, "post": serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"isLiked": False, "post": serializer.data}, status=status.HTTP_200_OK)
+
+        return Response({"isLiked": False, "post": serializer.data}, status=status.HTTP_200_OK)
 
 
 class DeletePost(APIView):
@@ -128,5 +128,5 @@ class DeletePost(APIView):
         if post.author == user:
             post.delete()
             return Response("Post deleted", status=status.HTTP_200_OK)
-        else:
-            return Response("User does not own post", status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response("User does not own post", status=status.HTTP_401_UNAUTHORIZED)
